@@ -79,8 +79,6 @@ int main(void){
 	//grafo completo
 	if(direcional == 'n'){
 		
-		printf("\nGrafo não direcionado: implementação necessaria\n");
-		
 		for(i = 0; i < nVert; i++) // zerar as visitas
 			vertVist[i] = 0;
 		vertVist[0] = 1; // começamos pelo 1
