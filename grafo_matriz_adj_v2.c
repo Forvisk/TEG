@@ -65,10 +65,11 @@ int main(void){
 			flag[b][a] = 0;
 		}
 	}
-	
+	//liberar arquivo
 	fclose(fp);
 	arquivo = NULL;
 	
+	//ver leitura
 	for (i= 0; i < nVert; i++){
 		for (j = 0; j < nVert; j++){
 			printf("%i ", grafo[i][j]);
@@ -125,17 +126,14 @@ int main(void){
 			if(vertVist[linha] == 0)	
 				ok = 0;
 		}
-		if(ok == 0){
-			
+
+		//finalização
+		if(ok == 0)
 			printf("\nGrafo incompleto\n");
-			
-		}else{
-			
-			printf("\nGrafo completo\n");
-			
-		}
+		else
+			printf("\nGrafo completo\n");	
+
 	}else{
-		
 		printf("\ngrafo direcionado: implementação a ser feita");
 		
 		int ok = 1;
@@ -151,15 +149,12 @@ int main(void){
 			if(vertVist[linha] == 0)	
 				ok = 0;
 		}
-		if(ok == 0){
-			
-			printf("\nGrafo incompleto\n");
-			
-		}else{
-			
-			printf("\nGrafo completo\n");
-			
-		}
+
+		//finalização
+		if(ok == 0)	
+			printf("\nGrafo incompleto\n");	
+		else
+			printf("\nGrafo completo\n");	
 	}
 	
 	return 0;
