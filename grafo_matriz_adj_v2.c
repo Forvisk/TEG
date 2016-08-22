@@ -1,3 +1,8 @@
+/*	gcc -Wall grafo_matriz_adj_v2.c -o grafadjv2
+*	autor: 	Adriano Zanella Junior
+*			Marlon Henry
+*/
+
 #include <stdio.h>
 
 int main(void){
@@ -8,37 +13,43 @@ int main(void){
 	
 	int nVert = 0, nArest = 0;
 	
-	char arest, direcional = 'n';
+	char arestas, direcional = 'n';
 	
 	int a, b, i, j;
 	int ok = 1; // se o grafo é completo
 	int linha = 0; // marco da linha atual, esse marco não vai a vertices que ainda não tenham sido visitados
 	int vertVist[nVert]; // Se o vertice ja foi visitado
 	int mud = 0;
-	
 	char *arquivo;
 	
+	//leitura do nome do arquivo contendo o grafo
+	/*
 	printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
-	
+	*/
+
 	//Abertura do arquivo
-	fp = fopen( arquivo, "r");
+	//fp = fopen( arquivo, "r");
+	fp = fopen( "NotDirComp.txt", "r");
+	
 	if(fp == NULL){
 		printf("\nArquivo não existe\n");
 		return 0;
-	}
-	
+	}else
+		printf("Arquivo encontrado\n");
+
 	//leitura do arquivo para vertica, direcionado e arestas
 	fscanf( fp, "%c\n", &direcional);
 	fscanf( fp, "%i\n", &nVert);
 	printf("%i\n", nVert);
 	fscanf( fp, "%i\n", &nArest);
 	printf("%i\n", nArest);
-	
-	
+
+
 	//alocação teste
 	grafo = malloc(sizeof(int) * nVert);
 	flag = malloc(sizeof(int) * nVert);
+	//arestas = malloc(sizeof(char) * nArest); // Uso em matriz de incidencia
 	for(i = 0; i < nVert; i++){	
 		grafo[i] = malloc( sizeof(int) * nVert);
 		flag[i] = malloc( sizeof(int) * nVert);	
@@ -54,8 +65,8 @@ int main(void){
 	//leitura do arquivo para grafo
 	for (i = 0; (i < nArest) && (feof(fp) == 0); i++){
 		
-		fscanf( fp, "%c: %i, %i;\n", &arest, &a, &b);
-		printf("%c: %i, %i\n", arest, a, b);
+		fscanf( fp, "%c: %i, %i;\n", &arestas, &a, &b);
+		printf("%c: %i, %i\n", arestas, a, b);
 		
 		grafo[--a][--b]++;
 		flag[a][b] = 0;
@@ -65,6 +76,7 @@ int main(void){
 			flag[b][a] = 0;
 		}
 	}
+
 	//liberar arquivo
 	fclose(fp);
 	arquivo = NULL;
@@ -104,9 +116,8 @@ int main(void){
 							
 							mud = 1;
 							printf("\nAresta encontrada\n%i <-> %i\n%i", j, i, vertVist[i]);
-							
-						}else if(flag[i][j]){
-							printf("\nJa passamos aqui\n%i -/- %i\n%i", i, j, vertVist[i]);
+						}else if(flag[i][j] && (grafo[i][j] > 0)){
+							printf("\nJa passamos aqui\n%i <-> %i\n%i", i, j, vertVist[i]);
 							j++;
 						}else{
 							printf("\nAresta não encontrada\n%i -/- %i\n%i", i, j, vertVist[i]);
@@ -155,6 +166,12 @@ int main(void){
 			printf("\nGrafo incompleto\n");	
 		else
 			printf("\nGrafo completo\n");	
+	}
+
+	//grau de  cada nó;
+	if(direcional == 'n'){
+
+
 	}
 	
 	return 0;
