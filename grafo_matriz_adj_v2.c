@@ -23,14 +23,14 @@ int main(void){
 	char *arquivo;
 	
 	//leitura do nome do arquivo contendo o grafo
-	/*
+	
 	printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
-	*/
+	
 
 	//Abertura do arquivo
-	//fp = fopen( arquivo, "r");
-	fp = fopen( "NotDirComp.txt", "r");
+	fp = fopen( arquivo, "r");
+	//fp = fopen( "NotDirComp.txt", "r");
 	
 	if(fp == NULL){
 		printf("\nArquivo não existe\n");
@@ -49,7 +49,6 @@ int main(void){
 	//alocação teste
 	grafo = malloc(sizeof(int) * nVert);
 	flag = malloc(sizeof(int) * nVert);
-	//arestas = malloc(sizeof(char) * nArest); // Uso em matriz de incidencia
 	for(i = 0; i < nVert; i++){	
 		grafo[i] = malloc( sizeof(int) * nVert);
 		flag[i] = malloc( sizeof(int) * nVert);	
@@ -170,9 +169,20 @@ int main(void){
 
 	//grau de  cada nó;
 	if(direcional == 'n'){
-
-
+		int grau[nVert] = 0; 
+		for(i = 0; i < nVert; i++){
+			for(j = i; j < nVert; j++){
+				if( (i == j) && (grafo[i][j] > 0))
+					grau[i] += grafo[i][j]*2;
+				else if(grafo[i][j] > 0){
+					grau[i] += grafo[i][j];
+					grau[j] += grafo[i][j];
+				}
+			}
+		}
 	}
-	
+	for( i = 0; i < nVert; i++){
+		printf("grau do nó %i: %i.\n", i+1, grau[i]);
+	}
 	return 0;
 }
