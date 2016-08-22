@@ -184,5 +184,32 @@ int main(void){
 	for( i = 0; i < nVert; i++){
 		printf("grau do nó %i: %i.\n", i+1, grau[i]);
 	}
+	
+	
+	/*
+	// Remover e Adicionar
+	{
+		char resp;
+		
+		while (1) {
+			puts ("Deseja remover (r) ou adicionar (a) [Continuar - (c)]?");
+			scanf ("%c", &resp);
+
+			if (resp == 'c')
+				break;
+				
+			if (resp == remover){
+				puts ("Qual vertice deseja remover?");
+				int i;
+				scanf ("%d", &i);
+				
+			} else {
+				
+			}
+			
+		}
+	}
+	*/
+	
 	return 0;
 }
