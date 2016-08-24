@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 #define NDIRCOMP "NotDirComp.txt"
+#define NDIRINCOMP "NotDirIncomp.txt"
 
 int leituragrafo(int **grafo, char *dir);
 int completoNaoDirecional(int **grafo, int nVert);
@@ -29,38 +30,46 @@ int main(void){
 		printf("Grafo lido\n");
 	}
 
-	printf("%i\n", nVert);
-	
+	//ver leitura
+	for (int i= 0; i < nVert; i++){
+		for (int j = 0; j < nVert; j++){
+			printf("%i ", grafo[i][j]);
+		}
+		printf("\n");
+	}
+
+	if(direcao == 'n'){
+		completoNaoDirecional(grafo, nVert);
+	}
+
 	return 0;
 }
 
 int leituragrafo(int **grafo, char *dir){
 
-	char *arquivo, arestas, direcao;
+	char arquivo[50], arestas, direcao;
 	FILE *fp;
 	int nVert = 0, nArest = 0;
 	int i, j, a = 0, b = 0;
-
+/*
 	printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
-	
-
-	//Abertura do arquivo
+	fp = fopen( arquivo, "r");
+*/
 	fp = fopen( NDIRCOMP, "r");
-	//fp = fopen( "NotDirComp.txt", "r");
+	
 	
 	if(fp == NULL){
 		printf("\nArquivo não existe\n");
 		return -1;
-	}else
-		printf("Arquivo encontrado\n");
+	}
 
 	//leitura do arquivo para vertica, direcionado e arestas
 	fscanf( fp, "%c\n", &direcao);
 	fscanf( fp, "%i\n", &nVert);
-	printf("%i\n", nVert);
+	printf("Vertices: %i", nVert);
 	fscanf( fp, "%i\n", &nArest);
-	printf("%i\n", nArest);
+	printf("Arestas: %i\n", nArest);
 
 
 	//alocação vertices
@@ -91,18 +100,17 @@ int leituragrafo(int **grafo, char *dir){
 	}
 
 	//liberar arquivo
-	fclose(fp);
+	//fclose(fp);
 
 	//ver leitura
 	for (i= 0; i < nVert; i++){
 		for (j = 0; j < nVert; j++){
 			printf("%i ", grafo[i][j]);
 		}
-		printf("..\n");
+		printf("\n");
 	}
 
 	*dir = direcao;
-	printf("Saindo da função\n");
 	return nVert;
 }
 
@@ -113,6 +121,8 @@ int completoNaoDirecional(int **grafo, int nVert){
 	int mud = 0;
 	int linha = 0;
 	int ok = 1;
+
+	printf("%i\n", grafo[nVert-1][nVert-1]);
 
 	/*Desnecessaria agora
 	//alocação das flags
@@ -128,16 +138,18 @@ int completoNaoDirecional(int **grafo, int nVert){
 			//grafo[i][j] = 0;
 			flag[i][j] = 0;
 		}
-	*/
 
 	//grafo completo
 	for(i = 0; i < nVert; i++) // zerar as visitas
 		vertVist[i] = 0;
+	*/
+
 	vertVist[0] = 1; // começamos pelo 1
 	i = linha;
 	j = 0;
 	
 	do{
+		printf("%i %i\n", linha, vertVist[linha]);
 		if(vertVist[linha] == 1){
 			do{
 				mud = 0;
