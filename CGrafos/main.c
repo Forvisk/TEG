@@ -1,4 +1,4 @@
-//gcc -Wall CGrafos.c CGrafos.h main.c -o grafov3
+//gcc -Wall CGrafos.c CGrafos.h main.c -o grafoAdjv3
 
 #include <stdio.h>
 #include "CGrafos.h"

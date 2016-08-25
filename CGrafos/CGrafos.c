@@ -33,18 +33,21 @@ void addArestaDirecionado(Grafo* grafo, int a, int b){
 	grafo->matriz_adj[a][b] += 1;
 }
 
-void addVertice(Grafo* grafo, int quant){
-	grafo->vertices += quant;
+Grafo* addVertice(Grafo* grafo, int quant){
+	Grafo* new = criarGrafo(grafo->vertices + quant);
+	/*grafo->vertices += quant;
 	int i = 0;
 	
 	grafo->matriz_adj = realloc(grafo->matriz_adj, sizeof(int*)*grafo->vertices);
 	for (i = 0; i < grafo->vertices; i++){
 		grafo->matriz_adj[i] = realloc(grafo->matriz_adj[i], sizeof(int)*grafo->vertices);
-	}
-	
+	}*/
+	return new;
 }
 
-void RemoveVertice(Grafo* grafo, int a){
+/*Função para remover um vertice do grafo*/
+Grafo* RemoveVertice(Grafo* grafo, int a){
+	/*
 	grafo->vertices;
 	int i ,j;
 	
@@ -62,7 +65,38 @@ void RemoveVertice(Grafo* grafo, int a){
 	}
 	
 	grafo->vertices --;
-	
+	*/
+	int i, j;
+	Grafo* new = criarGrafo(grafo->vertices - 1);
+
+	a--;
+	new->isDir = grafo->isDir;
+
+	for(i = 0; i < grafo->vertices; i++){
+		for(j = 0; j < grafo->vertices; j++){
+			if(grafo->matriz_adj[i][j] > 0){
+				if((i < a) && (j < a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+						addAresta(new, i, j);
+					}
+				}else if((i < a) && (j > a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+						addAresta(new, i, j-1);
+					}
+				}else if((i > a) && (j < a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+						addAresta(new, i-1, j);
+					}
+				}else if((i > a) &&(j > a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+						addAresta(new, i-1, j-1);
+					}
+				}
+			}
+		}
+	}
+
+	return new;
 }
 
 
