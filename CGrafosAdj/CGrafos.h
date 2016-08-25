@@ -1,8 +1,8 @@
 #ifndef __CGrafos__
 #define __CGrafos__
 
-#define NDIRCOMP "NotDirComp.txt"
-#define NDIRINCOMP "NotDirIncomp.txt"
+#define NDIRLI "NotDirComp.txt"
+#define NDIRNLI "NotDirIncomp.txt"
 
 typedef struct {
 	int** matriz_adj;
@@ -11,7 +11,7 @@ typedef struct {
 	int isDir;
 } Grafo;
 
-Grafo* criarGrafo (int n_vertices);
+Grafo* criarGrafo(int n_vertices);
 Grafo* leituraArquivo();
 
 void addAresta(Grafo* grafo, int a, int b);
@@ -23,13 +23,14 @@ Grafo* RemoveVertice(Grafo* grafo, int a);
 Grafo* addVerticeDirecional(Grafo* grafo, int quant);
 Grafo* RemoveVerticeDirecional(Grafo* grafo, int a);
 
-void putsGrafo (Grafo* grafo);
+void putsGrafo(Grafo* grafo);
 
-void ligadoDir(Grafo* grafo);
-void ligadoNDir(Grafo* grafo);
+void seLigadoDirecionado(Grafo* grafo);
+void seLigado(Grafo* grafo);
 
 void completo(Grafo* grafo);
 
-void grauNo(Grafo* grafo);
+void grauNosDirecionado(Grafo* grafo);
+void grauNos(Grafo* grafo);
 
 #endif

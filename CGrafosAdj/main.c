@@ -8,15 +8,19 @@ int main (void){
 
 	Grafo* grafo = leituraArquivo();
 
-	ligadoNDir(grafo);
+	seLigado(grafo);
 
 	putsGrafo(grafo);
 
-	grafo = RemoveVertice(grafo, 3);
+	/*grafo = RemoveVertice(grafo, 3);
 
 	putsGrafo(grafo);
 
 	grafo = addVertice(grafo, 4);
+
+	putsGrafo(grafo);*/
+
+	grauNos(grafo);
 
 	putsGrafo(grafo);
 
