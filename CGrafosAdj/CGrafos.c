@@ -160,7 +160,7 @@ Grafo* RemoveVertice(Grafo* grafo, int a){
 }
 
 void putsGrafo (Grafo* grafo){
-	printf("Grafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);
+	printf("\nGrafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);
 	//printf("\tDirecionado: %d\n", grafo->isDir);
 
 	if(grafo->isDir)
@@ -277,6 +277,29 @@ void seLigado(Grafo* grafo){
 }
 
 void grauNosDirecionado(Grafo* grafo){
+	int i, j;
+	int grau[grafo->vertices][3];
+	for(i = 0; i < grafo->vertices; i++){
+		grau[i][0] = 0;
+		grau[i][1] = 0;
+		grau[i][2] = 0;
+	}
+	for(i = 0; i < grafo->vertices; i++){
+		for(j = i; j < grafo->vertices; j++){
+			if((i == j) && (grafo->matriz_adj[i][j] > 0)){
+				grau[i][0] += grafo->matriz_adj[i][j];
+				grau[i][1] += grafo->matriz_adj[i][j];
+				grau[i][2] += grafo->matriz_adj[i][j] * 2;
+			}else if((i != j) && (grafo->matriz_adj[i][j] > 0)){
+				grau[i][1] += grafo->matriz_adj[i][j];
+				grau[i][2] += grafo->matriz_adj[i][j];
+				grau[j][0] += grafo->matriz_adj[i][j];
+				grau[j][2] += grafo->matriz_adj[i][j];
+			}
+		}
+	}
+	for(i = 0; i < grafo->vertices; i++)
+		printf("Grau do nó %i: \n\tentrada: %i;\n\tsaida: %i;\n\ttotal: %i", i+1, grau[i][0], grau[i][1], grau[i][2]);
 
 }
 
@@ -286,16 +309,16 @@ void grauNos(Grafo* grafo){
 	for(i = 0; i < grafo->vertices; i++)
 		grau[i] = 0;
 	for(i = 0; i < grafo->vertices; i++){
-		for(j = i; j < grafo->vertices; j++){
-			printf("Grau do nó %i: %i.\n%i %i\n", i+1, grau[i], i, j);
+		for(j = 0; j < grafo->vertices; j++){
 			if((i == j) && (grafo->matriz_adj[i][j] > 0)){
-				grau[i] += grafo->matriz_adj[i][j];
-			}else if(grafo->matriz_adj[i][j] > 0){
+				grau[i] += grafo->matriz_adj[i][j] * 2;
+			}else if((i != j) && (grafo->matriz_adj[i][j] > 0)){
 				grau[i] += grafo->matriz_adj[i][j];
 				grau[j] += grafo->matriz_adj[i][j];
 			}
 		}
 	}
 	for(i = 0; i < grafo->vertices; i++)
-		printf("Grau do nó %i: %i.\n", i+1, grau[i]);
+		printf("Grau do nó %i: %i.\n", i+1, grau[i]);	
 }
+
