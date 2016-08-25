@@ -33,39 +33,82 @@ void addArestaDirecionado(Grafo* grafo, int a, int b){
 	grafo->matriz_adj[a][b] += 1;
 }
 
-Grafo* addVertice(Grafo* grafo, int quant){
-	Grafo* new = criarGrafo(grafo->vertices + quant);
-	/*grafo->vertices += quant;
-	int i = 0;
-	
-	grafo->matriz_adj = realloc(grafo->matriz_adj, sizeof(int*)*grafo->vertices);
-	for (i = 0; i < grafo->vertices; i++){
-		grafo->matriz_adj[i] = realloc(grafo->matriz_adj[i], sizeof(int)*grafo->vertices);
-	}*/
+Grafo* addVerticeDirecional(Grafo* grafo, int quant){
+	int i, j;
+	Grafo* new = criarGrafo(grafo->vertices + quant - 1);
+
+	new->isDir = grafo->isDir;
+
+	for(i = 0; i < grafo->vertices; i++){
+		for(j = 0; j < grafo->vertices; j++){
+			if(grafo->matriz_adj[i][j] > 0){
+				if(i == j){
+					for(int c = 0; c < grafo->matriz_adj[i][j] / 2; c++){
+						printf("aresta %i %i\n", i, j);
+						addArestaDirecionado(new, i, j);
+					}
+				}else{
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+						printf("aresta %i %i\n", i, j);
+						addArestaDirecionado(new, i, j);
+					}
+				}
+			}
+		}
+	}
+
 	return new;
 }
 
-/*Função para remover um vertice do grafo*/
-Grafo* RemoveVertice(Grafo* grafo, int a){
-	/*
-	grafo->vertices;
-	int i ,j;
-	
-	free(grafo->matriz_adj[i]);
-	
-	for (i = a; i < grafo->vertices -1; i++){
-		grafo->matriz_adj[i] = grafo->matriz_adj[i+1];
-	}
-	
-	for (i = 0; i < grafo->vertices -1; i++){
-		for (j = a; j < grafo->vertices -1; i++){
-			grafo->matriz_adj[i][j] = grafo->matriz_adj[i][j+1];
+Grafo* addVertice(Grafo* grafo, int quant){
+	int i, j;
+	Grafo* new = criarGrafo(grafo->vertices + quant - 1);
+
+	new->isDir = grafo->isDir;
+
+	if((grafo->isDir == 0) && (grafo->vertices != 0)){
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = i; j < grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] > 0){
+					if(i == j){
+						for(int c = 0; c < grafo->matriz_adj[i][j] / 2; c++){
+							printf("aresta %i %i\n", i, j);
+							addAresta(new, i, j);
+						}
+					}else{
+						for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+							printf("aresta %i %i\n", i, j);
+							addAresta(new, i, j);
+						}
+					}
+				}
+			}
 		}
-		grafo->matriz_adj[i] = realloc(grafo->matriz_adj[i], sizeof(int)*(grafo->vertices -1));
-	}
-	
-	grafo->vertices --;
-	*/
+	}else if((grafo->isDir == 1) && (grafo->vertices != 0)){
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = 0; j < grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] > 0){
+					if(i == j){
+						for(int c = 0; c < grafo->matriz_adj[i][j] / 2; c++){
+							printf("aresta %i %i\n", i, j);
+							addArestaDirecionado(new, i, j);
+						}
+					}else{
+						for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+							printf("aresta %i %i\n", i, j);
+							addArestaDirecionado(new, i, j);
+						}
+					}
+				}
+			}
+		}
+
+	return new;
+}
+}
+
+
+Grafo* RemoveVerticeDirecional(Grafo* grafo, int a){
 	int i, j;
 	Grafo* new = criarGrafo(grafo->vertices - 1);
 
@@ -76,29 +119,63 @@ Grafo* RemoveVertice(Grafo* grafo, int a){
 		for(j = 0; j < grafo->vertices; j++){
 			if(grafo->matriz_adj[i][j] > 0){
 				if((i < a) && (j < a)){
-					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
-						addAresta(new, i, j);
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+						addArestaDirecionado(new, i, j);
+				}else if((i < a) && (j > a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+						addArestaDirecionado(new, i, j-1);
+				}else if((i > a) && (j < a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+						addArestaDirecionado(new, i-1, j);
+				}else if((i > a) &&(j > a)){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+						addArestaDirecionado(new, i-1, j-1);
+				}
+			}
+		}
+
+	}
+	return new;
+}
+
+Grafo* RemoveVertice(Grafo* grafo, int a){
+	int i, j;
+	Grafo* new = criarGrafo(grafo->vertices - 1);
+
+	a--;
+	new->isDir = grafo->isDir;
+
+	for(i = 0; i < grafo->vertices; i++){
+		for(j = i; j < grafo->vertices; j++){
+			if(grafo->matriz_adj[i][j] > 0){
+				if((i < a) && (j < a)){
+					if(i == j){
+						for(int c = 0; c < grafo->matriz_adj[i][j] / 2; c++)
+							addAresta(new, i, j);	
+					}else{
+						for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+							addAresta(new, i, j);
 					}
 				}else if((i < a) && (j > a)){
-					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
 						addAresta(new, i, j-1);
-					}
 				}else if((i > a) && (j < a)){
-					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
+					for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
 						addAresta(new, i-1, j);
-					}
 				}else if((i > a) &&(j > a)){
-					for(int c = 0; c < grafo->matriz_adj[i][j]; c++){
-						addAresta(new, i-1, j-1);
+					if(i == j){
+						for(int c = 0; c < grafo->matriz_adj[i][j] / 2; c++)
+							addAresta(new, i-1, j-1);
+					}else{
+						for(int c = 0; c < grafo->matriz_adj[i][j]; c++)
+							addAresta(new, i-1, j-1);
 					}
 				}
 			}
 		}
 	}
-
 	return new;
 }
-
 
 void putsGrafo (Grafo* grafo){
 	printf("Grafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);

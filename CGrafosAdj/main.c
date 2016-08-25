@@ -12,6 +12,14 @@ int main (void){
 
 	putsGrafo(grafo);
 
+	grafo = RemoveVertice(grafo, 3);
+
+	putsGrafo(grafo);
+
+	grafo = addVertice(grafo, 4);
+
+	putsGrafo(grafo);
+
 	return 0;
 }
 

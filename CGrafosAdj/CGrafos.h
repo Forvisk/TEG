@@ -20,6 +20,9 @@ void addArestaDirecionado(Grafo* grafo, int a, int b);
 Grafo* addVertice(Grafo* grafo, int quant);
 Grafo* RemoveVertice(Grafo* grafo, int a);
 
+Grafo* addVerticeDirecional(Grafo* grafo, int quant);
+Grafo* RemoveVerticeDirecional(Grafo* grafo, int a);
+
 void putsGrafo (Grafo* grafo);
 
 void ligadoDir(Grafo* grafo);
