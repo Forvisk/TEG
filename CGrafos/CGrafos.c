@@ -46,7 +46,7 @@ void addVertice(Grafo* grafo, int quant){
 
 void RemoveVertice(Grafo* grafo, int a){
 	grafo->vertices;
-	int i,j;
+	int i ,j;
 	
 	free(grafo->matriz_adj[i]);
 	
@@ -68,7 +68,12 @@ void RemoveVertice(Grafo* grafo, int a){
 
 void putsGrafo (Grafo* grafo){
 	printf("Grafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);
-	printf("\tDirecionado: %d\n", grafo->isDir);
+	//printf("\tDirecionado: %d\n", grafo->isDir);
+
+	if(grafo->isDir)
+		printf("\tGrafo direcionado\n");
+	else
+		printf("\tGrafo não direcionado\n");
 	
 	int i,j;
 	
@@ -78,4 +83,110 @@ void putsGrafo (Grafo* grafo){
 		}
 		printf("\n");
 	}
+}
+
+
+/*Função usada para ler arquivo, ela pedira o nome do arquivo e ira ler as caracteristicas do grafo e criara um grafo com tais caracteristicas
+	então ira continua lendo o arquivo e adcionara os vertices chamando as funções.*/
+Grafo* leituraArquivo(){
+	Grafo* grafo;
+	char arquivo[50], nonAresta, direcao;
+	FILE *fp;
+	int i, a = 0, b = 0;
+	int nVert = 0, nArest = 0;
+
+	printf("Nome do arquivo contendo o grafo: ");
+	scanf("%s", arquivo);
+	fp = fopen( arquivo, "r");
+
+	//fp = fopen( NDIRCOMP, "r");
+	
+	if(fp == NULL){
+		printf("\nArquivo não existe\n");
+		return NULL;
+	}
+
+	//leitura do arquivo para vertica, direcionado e arestas
+	fscanf( fp, "%c\n", &direcao);
+	fscanf( fp, "%i\n", &nVert);
+	printf("Vertices: %i", nVert);
+	fscanf( fp, "%i\n", &nArest);
+	printf("Arestas: %i\n", nArest);
+
+	grafo = criarGrafo(nVert);
+	if(direcao == 'd'){
+		grafo->isDir = 1;
+	}else if(direcao == 'n'){
+		grafo->isDir = 0;
+	}else{
+		printf("Arquivo não esta no padrão;\n");
+		return NULL;
+	}
+
+	for(i = 0; (i < nArest) && (feof(fp) == 0); i++) {
+		fscanf( fp, "%c: %i, %i;\n", &nonAresta, &a, &b);
+		printf("%c: %i, %i\n", nonAresta, a, b);
+		addAresta(grafo, --a, --b);
+	}
+
+	putsGrafo(grafo);
+
+	fclose(fp);
+
+	return grafo;
+}
+
+void ligadoDir(Grafo* grafo){
+
+}
+
+void ligadoNDir(Grafo* grafo){
+	int flag[grafo->vertices][grafo->vertices];
+	int vertVisit[grafo->vertices];
+	int mud = 0, linha = 0, ok = 1;
+	int i = linha, j = 0;
+
+	vertVisit[linha] = 1;
+
+	do{
+		printf("linha: %i\n", linha);
+		if(vertVisit[linha] == 1){
+			do{
+				mud = 0;
+				do{
+					if((grafo->matriz_adj[i][j] > 0) && (flag[i][j] == 0) && (i != j)){
+						printf("%i\n", vertVisit[j]);
+						printf("\nAresta encontrada\n%i <-> %i\n%i", j, i, vertVisit[i]);
+						int aux = i;
+						vertVisit[j] = 1;
+						flag[i][j] = 1;
+						i = j;
+						j = aux;
+						flag[i][j] = 1;
+						mud = 1;
+					}else if(flag[i][j])
+						printf("\nJa passamos aqui\n%i <-> %i\n%i", i, j, vertVisit[i]);
+					else
+						printf("\nAresta não encontrada\n%i -/- %i\n%i", i, j, vertVisit[i]);
+					j++;
+				}while(j < grafo->vertices);
+				j = 0;
+				i = linha;
+			}while(mud == 1);
+		}
+		linha++;
+		i = linha;
+		j = 0;
+		printf("linha: %i\n", linha);
+	}while(linha < grafo->vertices);
+
+	for(linha = 0; linha < grafo->vertices; linha++)
+		if(vertVisit[linha] == 0)
+			ok = 0;
+
+	//finalização
+	if(ok == 0)
+		printf("\nGrafo não ligado\n");
+	else
+		printf("\nGrafo ligado\n");
 }

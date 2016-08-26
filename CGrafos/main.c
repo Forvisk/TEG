@@ -1,9 +1,22 @@
+//gcc -Wall CGrafos.c CGrafos.h main.c -o grafov3
+
 #include <stdio.h>
 #include "CGrafos.h"
 
 
 int main (void){
-	
+
+	Grafo* grafo = leituraArquivo();
+
+	ligadoNDir(grafo);
+
+	putsGrafo(grafo);
+
+	return 0;
+}
+
+/* 	exemple
+
 	Grafo* grafo = criarGrafo(4);
 	
 	addAresta(grafo, 0,1);
@@ -14,7 +27,4 @@ int main (void){
 	putsGrafo(grafo);
 	
 	addVertice(grafo,2);
-	
-	putsGrafo(grafo);
-	return 0;
-}
+*/
