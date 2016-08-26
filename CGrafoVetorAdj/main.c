@@ -7,7 +7,7 @@
 
 int main(){
 	Vetor* vetor = leituraArquivo();
-
-	putsGrafo(vetor);
+	if(vetor != NULL)
+		putsGrafo(vetor);
 	return 0;
 }

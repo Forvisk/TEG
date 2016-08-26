@@ -1,10 +1,21 @@
+/*	TEG - Grafo por matriz de adjacencia
+*	Adriano Zanella Junior
+*	Marlon Henry
+*
+*	Esse código somente trabalha com grafos não direcionados.
+*	Para grafos direcionados precisa implementar funções adicionais.
+*/
 #ifndef __CGrafoVetorAdj__
 #define __CGrafoVetorAdj__
 
 #define NDIRCON "NotDirConexo.txt"
 #define NDIRDESCON "NotDirDesconexo.txt"
-#define DIRCON "DirConexo.txt"
-#define DIRDESCON "DirDesconexo.txt"
+
+
+typedef struct{
+	struct Arestas *next;
+	int vertice;
+} Arestas;
 
 typedef struct{
 	int* vertices;
@@ -14,17 +25,12 @@ typedef struct{
 	struct Arestas *arestas;
 } Vetor;
 
-typedef struct{
-	struct arestas *next;
-	struct arestas *last;
-	int vertice;
-} Arestas;
-
 Vetor* criaGrafo(int nV, int nA);
 Vetor* leituraArquivo();
 
+Arestas* criaAresta(int a);
 void addAresta(Vetor* vetor, int a, int b);
-void addArestaDirecional(Vetor* vetor, int a, int b);
+//void addArestaDirecional(Vetor* vetor, int a, int b);
 
 //Grafo* addVertice(Vetor* vetor);
 
