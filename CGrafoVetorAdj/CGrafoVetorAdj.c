@@ -1,3 +1,10 @@
+/*	TEG - Grafo por matriz de adjacencia
+*	Adriano Zanella Junior
+*	Marlon Henry
+*
+*	Esse código somente trabalha com grafos não direcionados.
+*	Para grafos direcionados precisa implementar funções adicionais.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "CGrafoVetorAdj.h"
@@ -29,12 +36,8 @@ void addAresta(Vetor* vetor, int a, int b){
 	Arestas* aux;
 
 	if(vetor->arestas == NULL){ // primeira aresta do grafo
-
-		//printf("a: %i\n", a);
 		vetor->arestas = newAresta1;
-		//printf("Primeira aresta\n");
 	}else{
-		//printf("a: %i\n", a);
 		i = 0;
 		while(i <= a){
 			pos_a += vetor->vertices[i];
@@ -42,56 +45,37 @@ void addAresta(Vetor* vetor, int a, int b){
 		}
 		atual = vetor->arestas;
 		i = 0;
-		//printf("pos a: %i\n", pos_a+1);
 		while(i < pos_a-1){
 			atual = atual->next;
 			i++;
 		}
-		printf("%p\n", (void*)atual->next);
 		if(atual->next != NULL){
-			//printf("!= NULL\n");
 			newAresta1->next = atual->next;
 		}
 		atual->next = newAresta1;
-		//printf("apontou\n");
 	}
 	vetor->vertices[a]++;
-	vetor->n_arestas++;
 
 	if(a != b){
-		//printf("b: %i\n", b);
 		i = 0;
 		while(i <= b){
 			pos_b += vetor->vertices[i];
 			i++;
 		}
-		//printf("pos b %i\n", pos_b+1);
 		atual = vetor->arestas;
 		i = 0;
 		while(i < pos_b-1){
 			atual = atual->next;
 			i++;
 		}
-		printf("%p\n", (void*)atual->next);
 		if(atual->next != NULL){
-			//printf("!= NULL\n");
 			newAresta2->next = atual->next;
 		}
 		atual->next = newAresta2;
-		//printf("apontou\n");
 
 		vetor->vertices[b]++;
-		vetor->n_arestas++;
-
-		//printf("apontou2\n");
 	}
-	//printf("fim\n");
-	atual = vetor->arestas;
-	/*do{
-		printf("%i\n", atual->vertice);
-		atual = atual->next;
-	}while(atual->next != NULL);
-	printf("%i\n", atual->vertice);*/
+	vetor->n_arestas++;
 }
 
 Arestas* criaAresta(int a){
@@ -111,39 +95,24 @@ Vetor* leituraArquivo(){
 
 	Vetor* vetor;
 
-	/*printf("Nome do arquivo contendo o grafo: ");
+	printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
-	fp = fopen( arquivo, "r");*/
-	fp = fopen( NDIRCON, "r");
+	fp = fopen( arquivo, "r");
+	//fp = fopen( NDIRCON, "r");
 	//fp = fopen( NDIRDESCON, "r");
-	//fp = fopen( DIRCON, "r");
-	//fp = fopen( DIRDESCON, "r");
 
 	if(fp == NULL){
 		printf("\nArquivo não existe\n");
 		return NULL;
 	}
 	//leitura do arquivo para vertica, direcionado e arestas
-	fscanf( fp, "%c\n", &direcao);
 	fscanf( fp, "%i\n", &nV);
-	printf("Vertices: %i", nV);
+	printf("Vertices: %i\n", nV);
 	fscanf( fp, "%i\n", &nA);
 	printf("Arestas: %i\n", nA);
 
 	vetor = criaGrafo(nV, nA);
-	if(direcao == 'd'){
-		vetor->isDir = 1;
-		printf("Este programa não trabalha com grafos direcionados\n");
-		fclose(fp);
-		return NULL;
-	}else if(direcao == 'n'){
-		vetor->isDir = 0;
-	}else{
-		printf("Arquivo não esta no padrão;\n");
-		fclose(fp);
-		return NULL;
-	}
-
+	vetor->isDir = 0;
 
 	for(i = 0; (i < nA) && (feof(fp) == 0); i++) {
 		fscanf( fp, "%c: %i, %i;\n", &c_aresta, &a, &b);
@@ -151,14 +120,6 @@ Vetor* leituraArquivo(){
 		addAresta(vetor, --a, --b);
 	}
 	fclose(fp);
-
-
-	Arestas* atual = vetor->arestas;
-	do{
-		printf("%i\n", atual->vertice);
-		atual = atual->next;
-	}while(atual->next != NULL);
-
 	return vetor;
 }
 
@@ -167,16 +128,12 @@ void putsGrafo(Vetor* vetor){
 	Arestas* atual = vetor->arestas;
 
 	printf("\nGrafo: %p\n\tVertices: %i\n\tArestas: %i\n", (void*)vetor,  vetor->n_vertices, vetor->n_arestas);
-	if(vetor->isDir)
-		printf("\tdirecionado\n");
-	else
-		printf("\tnão direcionado\n");
 
 	for(i = 0; i < vetor->n_vertices; i++){
 		t += vetor->vertices[i];
-		printf("Vertices da aresta %i:", i+1);
 		while(j < t){
-			printf("\n\t\t%i;", atual->vertice+1);
+			if(i <= atual->vertice)
+				printf("\t%i - %i;\n",i+1, atual->vertice+1);
 			atual = atual->next;
 			j++;
 		}
