@@ -30,6 +30,8 @@ void seLigado(Grafo* grafo);
 
 void completo(Grafo* grafo);
 
+Grafo* complemento(Grafo* grafo);
+
 void grauNosDirecionado(Grafo* grafo);
 void grauNos(Grafo* grafo);
 

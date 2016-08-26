@@ -322,3 +322,28 @@ void grauNos(Grafo* grafo){
 		printf("Grau do nó %i: %i.\n", i+1, grau[i]);	
 }
 
+Grafo* complemento(Grafo* grafo){
+	Grafo* ret = criarGrafo(grafo->vertices);
+	int i, j;
+	if(grafo->isDir){
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = 0; j<grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] == 0)
+					addArestaDirecionado(ret,i,j);
+			}
+		}
+	} else {
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = i; j<grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] == 0)
+					addAresta(ret,i,j);
+			}
+		}
+	}
+
+	return ret;
+
+	
+
+}
+
