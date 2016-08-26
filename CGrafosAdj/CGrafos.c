@@ -178,6 +178,59 @@ void putsGrafo (Grafo* grafo){
 	}
 }
 
+void putsGrafoIncidencia(Grafo* grafo){
+	int matriz_inc[grafo->arestas][grafo->vertices];
+	int i, j, a, c;
+	printf("\nGrafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);
+	for(a = 0; a < grafo->arestas; a++)
+		for(j = 0; j < grafo->vertices; j++)
+			matriz_inc[a][j] = 0;
+	a = 0;
+	if(grafo->isDir){
+		printf("\tGrafo direcionado\n");
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = 0; j < grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] > 0){
+					for(c = 0; c < grafo->matriz_adj[i][j]; c++){
+						if(a < grafo->arestas){
+							matriz_inc[a][i] = 1;
+							matriz_inc[a][j] = -1;
+							a++;
+						}else{
+							printf("Erro\n");
+							exit(-1);
+						}
+					}
+				}
+			}
+		}
+	}else{
+		printf("\tGrafo não direcionado\n");
+		for(i = 0; i < grafo->vertices; i++){
+			for(j = i; j < grafo->vertices; j++){
+				if(grafo->matriz_adj[i][j] > 0){
+					for(c = 0; c < grafo->matriz_adj[i][j]; c++){
+						if(a < grafo->arestas){
+							matriz_inc[a][i] = 1;
+							matriz_inc[a][j] = 1;
+							a++;
+						}else{
+							printf("Erro\n");
+							exit(-1);
+						}
+					}
+				}
+			}
+		}
+	}
+	for(a = 0; a < grafo->arestas; a++){
+		for(j = 0; j < grafo->vertices; j++){
+			printf(" %i", matriz_inc[a][j]);
+		}
+		printf("\n");
+	}
+}
+
 
 /*Função usada para ler arquivo, ela pedira o nome do arquivo e ira ler as caracteristicas do grafo e criara um grafo com tais caracteristicas
 	então ira continua lendo o arquivo e adcionara os vertices chamando as funções.*/
@@ -190,8 +243,10 @@ Grafo* leituraArquivo(){
 	/*printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
 	fp = fopen( arquivo, "r");*/
-	fp = fopen( NDIRLI, "r");
-	//fp = fopen( NDIRNLI, "r");
+	fp = fopen( NDIRCON, "r");
+	//fp = fopen( NDIRDESCON, "r");
+	//fp = fopen( DIRCON, "r");
+	//fp = fopen( DIRDESCON, "r");
 	if(fp == NULL){
 		printf("\nArquivo não existe\n");
 		return NULL;
@@ -214,113 +269,16 @@ Grafo* leituraArquivo(){
 	for(i = 0; (i < nArest) && (feof(fp) == 0); i++) {
 		fscanf( fp, "%c: %i, %i;\n", &nonAresta, &a, &b);
 		printf("%c: %i, %i\n", nonAresta, a, b);
-		addAresta(grafo, --a, --b);
+		if(grafo->isDir == 0)
+			addAresta(grafo, --a, --b);
+		else
+			addArestaDirecionado(grafo, --a, --b);
 	}
 	putsGrafo(grafo);
 	fclose(fp);
 	return grafo;
 }
 
-void seLigadoDirecionado(Grafo* grafo){
-
-}
-
-void seLigado(Grafo* grafo){
-	int flag[grafo->vertices][grafo->vertices];
-	int vertVisit[grafo->vertices];
-	int mud = 0, linha = 0, ok = 1;
-	int i = linha, j = 0;
-
-	vertVisit[linha] = 1;
-
-	do{
-		printf("linha: %i\n", linha);
-		if(vertVisit[linha] == 1){
-			do{
-				mud = 0;
-				do{
-					if((grafo->matriz_adj[i][j] > 0) && (flag[i][j] == 0) && (i != j)){
-						printf("%i\n", vertVisit[j]);
-						printf("\nAresta encontrada\n%i <-> %i\n%i", j, i, vertVisit[i]);
-						int aux = i;
-						vertVisit[j] = 1;
-						flag[i][j] = 1;
-						i = j;
-						j = aux;
-						flag[i][j] = 1;
-						mud = 1;
-					}else if(flag[i][j])
-						printf("\nJa passamos aqui\n%i <-> %i\n%i", i, j, vertVisit[i]);
-					else
-						printf("\nAresta não encontrada\n%i -/- %i\n%i", i, j, vertVisit[i]);
-					j++;
-				}while(j < grafo->vertices);
-				j = 0;
-				i = linha;
-			}while(mud == 1);
-		}
-		linha++;
-		i = linha;
-		j = 0;
-		printf("linha: %i\n", linha);
-	}while(linha < grafo->vertices);
-
-	for(linha = 0; linha < grafo->vertices; linha++)
-		if(vertVisit[linha] == 0)
-			ok = 0;
-
-	//finalização
-	if(ok == 0)
-		printf("\nGrafo não ligado\n");
-	else
-		printf("\nGrafo ligado\n");
-}
-
-void grauNosDirecionado(Grafo* grafo){
-	int i, j;
-	int grau[grafo->vertices][3];
-	for(i = 0; i < grafo->vertices; i++){
-		grau[i][0] = 0;
-		grau[i][1] = 0;
-		grau[i][2] = 0;
-	}
-	for(i = 0; i < grafo->vertices; i++){
-		for(j = i; j < grafo->vertices; j++){
-			if((i == j) && (grafo->matriz_adj[i][j] > 0)){
-				grau[i][0] += grafo->matriz_adj[i][j];
-				grau[i][1] += grafo->matriz_adj[i][j];
-				grau[i][2] += grafo->matriz_adj[i][j] * 2;
-			}else if((i != j) && (grafo->matriz_adj[i][j] > 0)){
-				grau[i][1] += grafo->matriz_adj[i][j];
-				grau[i][2] += grafo->matriz_adj[i][j];
-				grau[j][0] += grafo->matriz_adj[i][j];
-				grau[j][2] += grafo->matriz_adj[i][j];
-			}
-		}
-	}
-	for(i = 0; i < grafo->vertices; i++)
-		printf("Grau do nó %i: \n\tentrada: %i;\n\tsaida: %i;\n\ttotal: %i", i+1, grau[i][0], grau[i][1], grau[i][2]);
-
-}
-
-void grauNos(Grafo* grafo){
-	int i, j;
-	int grau[grafo->vertices];
-	for(i = 0; i < grafo->vertices; i++)
-		grau[i] = 0;
-	for(i = 0; i < grafo->vertices; i++){
-		for(j = 0; j < grafo->vertices; j++){
-			if((i == j) && (grafo->matriz_adj[i][j] > 0)){
-				grau[i] += grafo->matriz_adj[i][j] * 2;
-			}else if((i != j) && (grafo->matriz_adj[i][j] > 0)){
-				grau[i] += grafo->matriz_adj[i][j];
-				grau[j] += grafo->matriz_adj[i][j];
-			}
-		}
-	}
-	for(i = 0; i < grafo->vertices; i++)
-		printf("Grau do nó %i: %i.\n", i+1, grau[i]);	
-}
 
 Grafo* complemento(Grafo* grafo){
 	Grafo* ret = criarGrafo(grafo->vertices);
@@ -334,7 +292,7 @@ Grafo* complemento(Grafo* grafo){
 		}
 	} else {
 		for(i = 0; i < grafo->vertices; i++){
-			for(j = i; j<grafo->vertices; j++){
+			for(j = i; j < grafo->vertices; j++){
 				if(grafo->matriz_adj[i][j] == 0)
 					addAresta(ret,i,j);
 			}
@@ -342,8 +300,5 @@ Grafo* complemento(Grafo* grafo){
 	}
 
 	return ret;
-
-	
-
 }
 

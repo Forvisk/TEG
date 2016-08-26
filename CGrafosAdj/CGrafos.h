@@ -1,8 +1,10 @@
 #ifndef __CGrafos__
 #define __CGrafos__
 
-#define NDIRLI "NotDirComp.txt"
-#define NDIRNLI "NotDirIncomp.txt"
+#define NDIRCON "NotDirConexo.txt"
+#define NDIRDESCON "NotDirDesconexo.txt"
+#define DIRCON "DirConexo.txt"
+#define DIRDESCON "DirDesconexo.txt"
 
 typedef struct {
 	int** matriz_adj;
@@ -24,9 +26,10 @@ Grafo* addVerticeDirecional(Grafo* grafo, int quant);
 Grafo* RemoveVerticeDirecional(Grafo* grafo, int a);
 
 void putsGrafo(Grafo* grafo);
+void putsGrafoIncidencia(Grafo* grafo);
 
-void seLigadoDirecionado(Grafo* grafo);
-void seLigado(Grafo* grafo);
+void seConexoDirecionado(Grafo* grafo);
+void seConexo(Grafo* grafo);
 
 void completo(Grafo* grafo);
 

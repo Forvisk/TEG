@@ -1,4 +1,4 @@
-//gcc -Wall CGrafos.c CGrafos.h main.c -o grafoAdjv3
+//gcc -Wall CGrafos.c FGrafos.c CGrafos.h main.c -o grafoAdjv3
 
 #include <stdio.h>
 #include "CGrafos.h"
@@ -8,9 +8,12 @@ int main (void){
 
 	Grafo* grafo = leituraArquivo();
 
-	seLigado(grafo);
+	//seConexo(grafo);
+
+	seConexoDirecionado(grafo);
 
 	putsGrafo(grafo);
+	putsGrafoIncidencia(grafo);
 
 	/*grafo = RemoveVertice(grafo, 3);
 
