@@ -8,32 +8,17 @@
 #include "CGrafos.h"
 
 
-int main (void){
-
+int main(void){
 	Grafo* grafo = leituraArquivo();
-
-	//seConexo(grafo);
 	if(grafo != NULL){
 		if(direcionado(grafo)){
 			seConexoDirecionado(grafo);
+			grauNosDirecionado(grafo);
 		}else{
 			seConexo(grafo);
+			grauNos(grafo);
 		}
 		putsGrafo(grafo);
 	}
 	return 0;
 }
-
-/* 	exemple
-
-	Grafo* grafo = criarGrafo(4);
-	
-	addAresta(grafo, 0,1);
-	addAresta(grafo, 0,2);
-	addAresta(grafo, 0,3);
-	addAresta(grafo, 2,3);
-	
-	putsGrafo(grafo);
-	
-	addVertice(grafo,2);
-*/
