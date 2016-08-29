@@ -23,6 +23,8 @@ Grafo* leituraArquivo();
 void addAresta(Grafo* grafo, int a, int b);
 void addArestaDirecionado(Grafo* grafo, int a, int b);
 
+int direcionado(Grafo* grafo);
+
 Grafo* addVertice(Grafo* grafo, int quant);
 Grafo* RemoveVertice(Grafo* grafo, int a);
 
