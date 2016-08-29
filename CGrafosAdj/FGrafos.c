@@ -7,6 +7,10 @@
 #include "CGrafos.h"
 
 
+int direcionado(Grafo* grafo){
+	return grafo->isDir;
+}
+
 void seConexoDirecionado(Grafo* grafo){ // não esta funcionando no momento
 	int flag[grafo->vertices][grafo->vertices];
 	int vertVisit[grafo->vertices][2];
