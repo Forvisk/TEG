@@ -244,10 +244,10 @@ Grafo* leituraArquivo(){
 	FILE *fp;
 	int i, a = 0, b = 0;
 	int nVert = 0, nArest = 0;
-	/*printf("Nome do arquivo contendo o grafo: ");
+	printf("Nome do arquivo contendo o grafo: ");
 	scanf("%s", arquivo);
-	fp = fopen( arquivo, "r");*/
-	fp = fopen( NDIRCON, "r");
+	fp = fopen( arquivo, "r");
+	//fp = fopen( NDIRCON, "r");
 	//fp = fopen( NDIRDESCON, "r");
 	//fp = fopen( DIRCON, "r");
 	//fp = fopen( DIRDESCON, "r");
