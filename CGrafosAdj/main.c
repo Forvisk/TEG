@@ -13,24 +13,14 @@ int main (void){
 	Grafo* grafo = leituraArquivo();
 
 	//seConexo(grafo);
-
-	seConexoDirecionado(grafo);
-
-	putsGrafo(grafo);
-	putsGrafoIncidencia(grafo);
-
-	/*grafo = RemoveVertice(grafo, 3);
-
-	putsGrafo(grafo);
-
-	grafo = addVertice(grafo, 4);
-
-	putsGrafo(grafo);*/
-
-	grauNos(grafo);
-
-	putsGrafo(grafo);
-
+	if(grafo != NULL){
+		if(direcionado(grafo)){
+			seConexoDirecionado(grafo);
+		}else{
+			seConexo(grafo);
+		}
+		putsGrafo(grafo);
+	}
 	return 0;
 }
 
