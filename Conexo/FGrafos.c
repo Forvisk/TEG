@@ -19,20 +19,20 @@ int direcionado(Grafo* grafo){
 void seConexo(Grafo* grafo){
 	int flag[grafo->vertices][grafo->vertices];
 	int vertVisit[grafo->vertices];
-	int mud = 0, linha = 0, ok = 1;
+	int mud = 0, linha = 0;
 	int i, j;
-	int subgrafo = 1;
+	int num_subgrafo = 1, subAtual;
 	for(j = 0; j < grafo->vertices; j++){
 		vertVisit[j] = 0;
 		for(i = 0; i < grafo->vertices; i++)
 			flag[i][j] = 0;
 	}
-	vertVisit[linha] = subgrafo;
+	vertVisit[linha] = num_subgrafo;
 	j = 0; i = linha;
 	do{
 		if(vertVisit[linha] == 0){
-			subgrafo++;
-			vertVisit[linha] = subgrafo;
+			num_subgrafo++;
+			vertVisit[linha] = num_subgrafo;
 		}
 		if(vertVisit[linha] > 0){
 			do{
@@ -57,46 +57,39 @@ void seConexo(Grafo* grafo){
 		i = linha;
 		j = 0;
 	}while(linha < grafo->vertices);
-	for(linha = 0; linha < grafo->vertices; linha++){
-		printf("%i %i\n", linha, vertVisit[linha]);
-		if(vertVisit[linha] == 0)
-			ok = 0;
-	}
-	if(ok == 0)
-		printf("\nGrafo desconexo\n");
-	else
-		printf("\nGrafo Conexo\n");
-	if(subgrafo > 1){
-		int qualSub;
-		for(qualSub = 1; qualSub <= subgrafo; qualSub++){
-			int vertSub = 0;
-			printf("\nVertices pertencentes ao subgrafo %i:\n\t", qualSub);
-			for(linha = 0; linha < grafo->vertices; linha++){
-				if(vertVisit[linha] == qualSub){
-					vertSub++;
-					printf(" %i;", linha);
-				}
-			}
 
-			int relacaoVert[vertSub][2], v = 0;
-			for(linha = 0; linha < grafo->vertices; linha++){
-				if(vertVisit[linha] == qualSub){
-					relacaoVert[v][0] = linha;
-					relacaoVert[v][1] = v;
-					printf(" %i = %i;", linha, v);
+	if(num_subgrafo == 1)
+		printf("\nGrafo Conexo\n");
+	else{
+		printf("\nGrafo desconexo\n");
+
+		for(subAtual = 1; subAtual <= num_subgrafo; subAtual++){
+			int sub_nVertices = 0;
+			int relacao_vert[grafo->vertices];
+			for(i = 0; i < grafo->vertices; i++){
+				if(subAtual == vertVisit[i]){
+					relacao_vert[i] = sub_nVertices;
+					sub_nVertices++;
+					//printf("vert %i -> %i\n", i, relacao_vert[i]);
+				}else{
+					relacao_vert[i] = -1;
 				}
 			}
-			Grafo* subGrafo = criaGrado(vertSub);
+			Grafo *subgrafo = criarGrafo(sub_nVertices);
 			for(i = 0; i < grafo->vertices; i++){
-				for(j = i; j < grafo->vertices; j++){
-					if(vertVisit[i] == qualSub){
-						for( v = 0; v < grafo->matriz_adj[i][j]; v++)
-							addAresta(subGrafo, (i), (j));
+				if(subAtual == vertVisit[i]){
+					for(j = i; j < grafo->vertices; j++){
+						if(subAtual == vertVisit[j]){
+							//printf("linha %i\tcoluna %i\tnvert: %i\n", i, j, grafo->matriz_adj[i][j]);
+							for(mud = 0; mud < grafo->matriz_adj[i][j]; mud++)
+								addAresta(subgrafo, relacao_vert[i], relacao_vert[j]);
+						}
 					}
 				}
 			}
+			putsGrafo(subgrafo);
+			printf("\n");
 		}
-		printf("\n");
 	}
 }
 
