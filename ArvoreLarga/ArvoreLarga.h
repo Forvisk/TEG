@@ -9,6 +9,8 @@
 
 #define MARCA 1
 #define SEMMARCA 0
+#define SUCESSO 1
+#define FRACASSO 0
 
 typedef struct {
 	struct Vertice *inicio;
@@ -18,6 +20,7 @@ typedef struct {
 typedef struct {
 	int nome;
 	struct Filhos *filho;
+	struct Vertice *pai;
 } Vertice;
 
 typedef struct {
@@ -33,7 +36,9 @@ typedef struct {
 } Arestas;*/
 
 Arvore* criarArvore(Grafo* grafo, int verticeInit);
+int adicionaVertice(int novoVertice, int verticePai, Arvore *tree);
+Vertice* buscaVertice(int nome, Vertice *verticeAtual);
 
-void putsArvor(Arvore* arvore);
+void putsArvore(Arvore* arvore);
 
 #endif
