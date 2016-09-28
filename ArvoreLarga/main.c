@@ -17,5 +17,6 @@ int main(void){
 	buscaVerticeArvore(0, tree);
 	buscaVerticeArvore(3, tree);
 	buscaVerticeArvore(6, tree);
+	buscaVerticeArvore(9, tree);
 	return 0;
 }

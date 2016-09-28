@@ -133,7 +133,7 @@ Vertice* buscaVerticeFilhoArvore( int nome, Vertice* verticePai){
 *
 *
 *
-*/
+*//*
 Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo){
 	if(verticeInicial < grafo->vertices){
 
@@ -171,7 +171,7 @@ Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo){
 		putsGrafo(grafo);
 		return NULL;
 	}
-}
+}*/
 
 
 /*	Funções de Impressão
