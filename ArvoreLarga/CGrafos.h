@@ -5,10 +5,11 @@
 #ifndef __CGrafos__
 #define __CGrafos__
 
-#define NDIRCON "NotDirConexo.txt"
-#define NDIRDESCON "NotDirDesconexo.txt"
-#define DIRCON "DirConexo.txt"
-#define DIRDESCON "DirDesconexo.txt"
+#define GRAFO1 "grafo1.txt"
+#define GRAFO2 "grafo2.txt"
+#define GRAFO3 "grafo3.txt"
+#define GRAFO4 "grafo4.txt"
+#define GRAFO5 "grafo5.txt"
 
 typedef struct {
 	int** matriz_adj;

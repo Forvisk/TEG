@@ -4,8 +4,8 @@
 
 #include "CGrafos.h"
 
-#ifndef __ArvoreProfunda__
-#define __ArvoreProfunda__
+#ifndef __ArvoreLarga__
+#define __ArvoreLarga__
 
 #define MARCA 1
 #define SEMMARCA 0
@@ -38,8 +38,8 @@ typedef struct {
 /*	Funções de Criação	*/
 Arvore* criarArvore();
 Vertice* criarVerticeArvore(int nome);
-void addPrimeiroVerticeArvore(Vertice* vertice, Arvore* arvore);
-void addVerticeArvore(Vertice* novoVertice, Vertice* pai, Arvore* arvore);
+void addPrimeiroVerticeArvore(Vertice* novoVertice, Arvore* arvore);
+void addVerticeArvore(Vertice* novoVertice, Vertice* verticePai, Arvore* arvore);
 
 /*	Funções de busca	*/
 Vertice* buscaVerticeArvore(int nome, Arvore* arvore);

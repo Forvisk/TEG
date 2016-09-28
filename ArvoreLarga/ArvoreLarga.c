@@ -21,8 +21,8 @@ Arvore* criarArvore(){
 	return new;
 }
 
-void addPrimeiroVerticeArvore(Vertice* vertice, Arvore* arvore){
-	arvore->inicio = vertice;
+void addPrimeiroVerticeArvore(Vertice* novoVertice, Arvore* arvore){
+	arvore->inicio = novoVertice;
 	arvore->n_vertices++;
 }
 
@@ -36,18 +36,18 @@ Vertice* criarVerticeArvore(int nome){
 	return new;
 }
 
-void addVerticeArvore(Vertice* verticePai, Vertice* verticeFilho, Arvore* arvore){
+void addVerticeArvore(Vertice* novoVertice, Vertice* verticePai, Arvore* arvore){
 
 	ListaV* novaSeccao = (ListaV*)malloc(sizeof(ListaV));
-	novaSeccao->vertice = verticeFilho;
-	verticeFilho->pai = verticePai;
+	novaSeccao->vertice = novoVertice;
+	novoVertice->pai = verticePai;
 	novaSeccao->proximo = NULL;
 
 	if(verticePai->filho == NULL){
 		verticePai->filho = novaSeccao;
-		//printf("primeirofilho %i %i\n",verticePai->nome, verticeFilho->nome);
+		//printf("primeirofilho %i %i\n",verticePai->nome, novoVertice->nome);
 	}else{
-		//printf("novo filho %i %i\n",verticePai->nome, verticeFilho->nome);
+		//printf("novo filho %i %i\n",verticePai->nome, novoVertice->nome);
 		ListaV* listaAux = verticePai->filho;
 		while(listaAux->proximo != NULL){
 			//printf("Proximo\n");
@@ -133,7 +133,7 @@ Vertice* buscaVerticeFilhoArvore( int nome, Vertice* verticePai){
 *
 *
 *
-*//*
+*/
 Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo){
 	if(verticeInicial < grafo->vertices){
 
@@ -145,24 +145,32 @@ Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo){
 
 
 		verticeVisitado[verticeInicial] = 1;
+		addPrimeiroVerticeArvore( criarVerticeArvore(verticeInicial), arvore);
 		int leave = 1;
 		int i;
 		do{
-			if(verticeVisitado[i] == 1){
-				Vertice* verticePai = buscaVerticeArvore(i,);
-
-				for(int j = 0; j < grafo->vertices; j++){
-					if((grafo->matriz_adj[i][j] > 0) && (i != j)){
-						verticeVisitado[j] = 1;
-						Vertice* verticeFilho = criarVerticeArvore(j, arvore);
+			leave = 1;
+			i = 0;
+			do{
+				if(verticeVisitado[i] == 1){
+					//printf("\nBuscando %i\n", i);
+					Vertice* verticePai = buscaVerticeArvore(i, arvore);
+					//printf("\nAdicioando vertices filhos de %i: ", i);
+					for(int j = 0; j < grafo->vertices; j++){
+						if((grafo->matriz_adj[i][j] > 0) && (i != j) && (verticeVisitado[j] == 0)){
+							//printf(" %i ", j);
+							Vertice* verticeFilho = criarVerticeArvore(j);
+							addVerticeArvore(verticeFilho, verticePai, arvore);
+							//printf(" %i ok", j);
+							verticeVisitado[j] = 1;
+						}
 					}
+					//putsArvore(arvore);
+					verticeVisitado[i]++;
+					leave = 0;
 				}
-				leave = 0;
-			}
 			i++;
-			if(i >= grafo->vertices){
-				i = 0;
-			}
+			}while(i < grafo->vertices);
 		}while(!leave);
 
 		return arvore;
@@ -171,7 +179,7 @@ Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo){
 		putsGrafo(grafo);
 		return NULL;
 	}
-}*/
+}
 
 
 /*	Funções de Impressão
