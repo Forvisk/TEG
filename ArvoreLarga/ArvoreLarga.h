@@ -19,15 +19,15 @@ typedef struct {
 
 typedef struct {
 	int nome;
-	struct Filhos *filho;
+	struct ListaV *filho;
 	struct Vertice *pai;
 } Vertice;
 
 typedef struct {
 	//struct Arestas *aresta;
 	struct Vertice *vertice;
-	struct Filhos *proximo;
-} Filhos;
+	struct ListaV *proximo;
+} ListaV;
 
 /*typedef struct {
 	struct Vertice *filho;
@@ -35,10 +35,24 @@ typedef struct {
 	int peso;
 } Arestas;*/
 
-Arvore* criarArvore(Grafo* grafo, int verticeInit);
-int adicionaVertice(int novoVertice, int verticePai, Arvore *tree);
-Vertice* buscaVertice(int nome, Vertice *verticeAtual);
+/*	Funções de Criação	*/
+Arvore* criarArvore();
+Vertice* criarVerticeArvore(int nome);
+void addPrimeiroVerticeArvore(Vertice* vertice, Arvore* arvore);
+void addVerticeArvore(Vertice* novoVertice, Vertice* pai, Arvore* arvore);
 
+/*	Funções de busca	*/
+Vertice* buscaVerticeArvore(int nome, Arvore* arvore);
+Vertice* buscaVerticeFilhoArvore(int nome, Vertice* verticePai);
+
+/*	Funções de Leitura de Grafo	*/
+Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo);
+
+/*	Funções de Impressao	*/
 void putsArvore(Arvore* arvore);
+void putsFilhos(Vertice* verticePai);
+
+/*	Função de Teste 	*/
+Arvore* testeArvore();
 
 #endif
