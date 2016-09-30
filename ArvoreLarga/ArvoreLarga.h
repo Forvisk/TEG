@@ -48,9 +48,18 @@ Vertice* buscaVerticeFilhoArvore(int nome, Vertice* verticePai);
 /*	Funções de Leitura de Grafo	*/
 Arvore* criarArvoreLargura( int verticeInicial, Grafo* grafo);
 
+
+
 /*	Funções de Impressao	*/
 void putsArvore(Arvore* arvore);
 void putsFilhos(Vertice* verticePai);
+void putsDescendentes(int nome, Arvore* arvore);
+void putsDescendentesRecursao(Vertice* verticePai);
+void putsAscendentes(int nome, Arvore *arvore);
+void putsAscendentesRecursao(Vertice* verticeFilho);
+
+int pedeVerticeInicial();
+int pedeVerticeDesejado();
 
 /*	Função de Teste 	*/
 Arvore* testeArvore();

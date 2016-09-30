@@ -17,9 +17,11 @@ int main(void){
 	buscaVerticeArvore(3, tree);
 	buscaVerticeArvore(6, tree);
 	buscaVerticeArvore(9, tree);*/
-	Arvore* tree = criarArvoreLargura( 0,grafo);
+	Arvore* tree = criarArvoreLargura( pedeVerticeInicial(),grafo);
 
 	printf("\n\n");
 	putsArvore(tree);
+	putsDescendentes(pedeVerticeDesejado(), tree);
+	putsAscendentes(pedeVerticeDesejado(), tree);
 	return 0;
 }
