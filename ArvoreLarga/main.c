@@ -8,14 +8,20 @@
 #include "CGrafos.h"
 #include "ArvoreLarga.h"
 
-
 int main(void){
-	/*Grafo* grafo = leituraArquivo();
-	putsGrafo(grafo);*/
-	Arvore* tree = testeArvore();
+	Grafo* grafo = leituraArquivo();
+	putsGrafo(grafo);
+	/*Arvore* tree = testeArvore();
 	putsArvore(tree);
 	buscaVerticeArvore(0, tree);
 	buscaVerticeArvore(3, tree);
 	buscaVerticeArvore(6, tree);
+	buscaVerticeArvore(9, tree);*/
+	Arvore* tree = criarArvoreLargura( pedeVerticeInicial(),grafo);
+
+	printf("\n\n");
+	putsArvore(tree);
+	putsDescendentes(pedeVerticeDesejado(), tree);
+	putsAscendentes(pedeVerticeDesejado(), tree);
 	return 0;
 }
