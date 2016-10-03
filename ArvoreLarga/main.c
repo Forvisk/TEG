@@ -21,7 +21,11 @@ int main(void){
 
 	printf("\n\n");
 	putsArvore(tree);
+	
+	printf("Descentes de um vertice:");
 	putsDescendentes(pedeVerticeDesejado(), tree);
+
+	printf("Ancestrais de um vertice:");
 	putsAscendentes(pedeVerticeDesejado(), tree);
 	return 0;
 }
