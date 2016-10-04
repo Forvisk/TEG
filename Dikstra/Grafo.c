@@ -59,8 +59,25 @@ void addAresta( int origem, int destino, int custo, Grafo* grafo){
 	grafo->n_arestas--;
 }
 
-//void removeVertice(int vertice, Grafo* grafo);
-
+/*void removeVertice(int vertice, Grafo* grafo){
+	if(vertice < grafo->n_vertices){
+		int i, j;
+		int tam_novo = grafo->n_vertices - 1;
+		int **novo_vertices, **novo_custo;
+		novo_vertices = ( int**)malloc( sizeof( int*) * tam_novo);
+		novo_custo = ( int**)malloc( sizeof( int*) * tam_novo);
+		for( i = 0; i < grafo->n_vertices; i++){
+			novo_vertices[i] = ( int*)malloc( sizeof( int) * tam_novo);
+			novo_custo[i] = ( int*)malloc( sizeof( int) * tam_novo);
+			for(j = 0; j < grafo->n_vertices; j++){
+				
+			}
+		}
+	}else{
+		printf("Vertice não existente!");
+	}
+}
+*/
 //void removeAresta(int origem, int destino, Grafo* grafo);
 
 Grafo* leituraGrafoDirecionado(){
