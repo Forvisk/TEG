@@ -11,17 +11,26 @@ typedef struct{
 	int **custo;
 } Grafo;
 
+//GrafoConstrutor.c
+
 Grafo* criaGrafo(int n_vertices);
 
 void addVertice(Grafo* grafo);
 void addAresta(int origem, int destino, int custo, Grafo* grafo);
 
-void removeVertice(int vertice, Grafo* grafo);
-void removeAresta(int origem, int destino, Grafo* grafo);
+int removeVertice(int vertice, Grafo* grafo);
+int removeAresta(int origem, int destino, Grafo* grafo);
+
+//GrafoTools.c
 
 Grafo* leituraGrafo();
 Grafo* leituraGrafoDirecioado();
 
 void putsGrafo();
+
+//GrafoEstado.c
+
+int seConexo(Grafo* grafo);
+int seDirecionado(Grafo* grafo);
 
 #endif
