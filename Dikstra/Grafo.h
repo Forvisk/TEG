@@ -30,7 +30,7 @@ void putsGrafo();
 
 //GrafoEstado.c
 
-int seConexo(Grafo* grafo);
+int seConectado(Grafo* grafo);
 int seDirecionado(Grafo* grafo);
 
 #endif
