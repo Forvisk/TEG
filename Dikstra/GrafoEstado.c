@@ -2,23 +2,17 @@
 // Marlon Henry Schweigert
 // Adriano Zanella Jr
 
-#include <stdlib.h>
-#include <stdio.h>
+
 #include "Grafo.h"
 
 int seConectado(Grafo* grafo){
 	int i, j;
 	int n_vertices = grafo->n_vertices;
 	int vert_visitado[ n_vertices][2];
-	int matriz_visitado[ n_vertices][ n_vertices];
 	int linha = 0, leave = 1;
-	int visit = 0;
 	for( i = 0; i < n_vertices; i++){
 		vert_visitado[ i][ 0] = 0;
 		vert_visitado[ i][ 1] = 0;
-		for( j = 0; j < n_vertices; j++){
-			matriz_visitado[ i][ j] = 0;
-		}
 	}
 
 	vert_visitado[ linha][0] = 1;

@@ -1,18 +1,17 @@
 // cc (2016)
 // Marlon Henry Schweigert
 // Adriano Zanella Jr
-
 /*
-	gcc -Wall Grafo.h GrafoConstrutor.c GrafoTools.c GrafoEstado.c main.c -o dikstra
+	gcc -Wall Grafo.h GrafoConstrutor.c GrafoTools.c GrafoEstado.c Dijkstra.c main.c -o dikstra
 */
 
-#include <stdio.h>
+
 #include "Grafo.h"
 
 int main(){
 	Grafo* grafo = leituraGrafo();
-	putsGrafo(grafo);
-	seConectado(grafo);
+	putsGrafo( grafo);
+	seConectado( grafo);
 	return 0;
 }
 
