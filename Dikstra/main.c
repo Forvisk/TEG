@@ -11,7 +11,7 @@
 int main(){
 	Grafo* grafo = leituraGrafo();
 	putsGrafo( grafo);
-	seConectado( grafo);
+	dijkstra( grafo, escolheVertice( grafo));
 	return 0;
 }
 
@@ -19,24 +19,26 @@ int main(){
 
 //GrafoConstrutor.c
 
-	Grafo* criaGrafo(int n_vertices);
-
-	void addVertice(Grafo* grafo);
-	void addAresta(int origem, int destino, int custo, Grafo* grafo);
-
-	int removeVertice(int vertice, Grafo* grafo);
-	int removeAresta(int origem, int destino, Grafo* grafo);
+Grafo* criaGrafo( int n_vertices);
+void addVertice( Grafo* grafo);
+void addAresta( int origem, int destino, int custo, Grafo* grafo);
+int removeVertice( int vertice, Grafo* grafo);
+int removeAresta( int origem, int destino, Grafo* grafo);
 
 //GrafoTools.c
-	
-	Grafo* leituraGrafo();
-	Grafo* leituraGrafoDirecioado();
 
-	void putsGrafo'();
+Grafo* leituraGrafo();
+Grafo* leituraGrafoDirecioado();
+void putsGrafo();
+int escolheVertice( Grafo* grafo);
 
 //GrafoEstado.c
 
-	int seConectado(Grafo* grafo);
-	int seDirecionado(Grafo* grafo);
+int seConectado( Grafo* grafo);
+int seDirecionado( Grafo* grafo);
+
+//Dijkstra.c
+
+void dijkstra( Grafo* grafo, int verticeInicial);
 
 */

@@ -89,8 +89,8 @@ int escolheVertice( Grafo* grafo){
 	int vertice;
 	printf( "Selecione o vertice desejado: ");
 	scanf( "%i", &vertice);
-	if( vertice < grafo->n_vertices)
-		return ( vertice - 1);
+	if( --vertice < grafo->n_vertices)
+		return ( vertice);
 	else{
 		printf( "Vertice não existente!\n");
 		return -1;

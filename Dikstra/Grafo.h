@@ -36,6 +36,8 @@ int escolheVertice( Grafo* grafo);
 int seConectado( Grafo* grafo);
 int seDirecionado( Grafo* grafo);
 
-//dijkstra.c
+//Dijkstra.c
+
+void dijkstra( Grafo* grafo, int verticeInicial);
 
 #endif
