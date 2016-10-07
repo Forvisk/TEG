@@ -13,8 +13,8 @@ int possuiCicloNegativo(Grafo* grafo){
 		for( j = 0; j < n_vertices; j++){
 			if( i != j){
 				if( grafo->vertices[ i][ j] > 0){
-					printf("achou aresta %i para %i\n", i+1, j+1);
-					printf("%i\n", grafo->custo[ i][ j]);
+					//printf("achou aresta %i para %i\n", i+1, j+1);
+					//printf("%i\n", grafo->custo[ i][ j]);
 					int cicloNegatico = buscaCiclo( i, j, grafo, grafo->custo[ i][ j]);
 					if( cicloNegatico == NEG){
 						return NEG;
@@ -31,20 +31,20 @@ int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAt
 	int i = verticeOrigem;
 	int j = verticeDestino;
 	if( grafo->vertices[ i][ j] > 0){
-		printf("achou aresta %i para %i\n", i+1, j+1);
-		printf("%i\n", custoAtual + grafo->custo[ i][ j]);
+		//printf("achou aresta %i para %i\n", i+1, j+1);
+		//printf("%i\n", custoAtual + grafo->custo[ i][ j]);
 		if( custoAtual + grafo->custo[ i][ j] < 0){
 			return NEG;
 		}else{
-			printf("Ciclo positivo\n");
+			//printf("Ciclo positivo\n");
 			return POS;
 		}
 	}
 	for( j = 0; j < n_vertices; j++){
 		if( i != j){
 			if(grafo->vertices[ i][ j] > 0){
-					printf("achou aresta %i para %i\n", i+1, j+1);
-					printf("%i\n", custoAtual + grafo->custo[ i][ j]);
+					//printf("achou aresta %i para %i\n", i+1, j+1);
+					//printf("%i\n", custoAtual + grafo->custo[ i][ j]);
 					int cicloNegatico = buscaCiclo( verticeDestino, j, grafo, custoAtual + grafo->custo[ i][ j]);
 				if( cicloNegatico == NEG){
 					return NEG;
@@ -52,6 +52,10 @@ int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAt
 			}
 		}
 	}
-	printf("Fim de linha %i\n", i+1);
+	//printf("Fim de linha %i\n", i+1);
 	return POS;
+}
+
+void bellmanFord(Grafo* grafo){
+	printf("HI\n");
 }

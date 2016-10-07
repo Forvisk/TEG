@@ -49,5 +49,6 @@ void dijkstra( Grafo* grafo, int verticeInicial);
 
 int possuiCicloNegativo(Grafo* grafo);
 int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual);
+void bellmanFord(Grafo* grafo);
 
 #endif

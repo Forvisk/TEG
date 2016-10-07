@@ -18,9 +18,9 @@ int main(){
 			if(grafo != NULL){
 				putsGrafo( grafo);
 				if( !possuiCicloNegativo(grafo)){
-					printf(" não possui ciclo negativo\n");
+					bellmanFord(grafo);
 				}else{
-					printf("opossdaosuid\n");
+					printf("Possiu ciclos negativos, não é possivel usar Bellman-Ford\n");
 				}
 			}else{
 				printf("Falha na criação do Grafo!\n");
@@ -62,5 +62,6 @@ int seDirecionado( Grafo* grafo);
 
 int possuiCicloNegativo(Grefo* grafo);
 int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual);
+void bellmanFord(Grafo* grafo);
 
 */
