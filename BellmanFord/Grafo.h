@@ -9,6 +9,9 @@
 #ifndef __Grafo__
 #define __Grafo__
 
+#define NEG 1
+#define POS 0
+
 typedef struct{
 	int n_vertices;
 	int n_arestas;
@@ -44,6 +47,7 @@ void dijkstra( Grafo* grafo, int verticeInicial);
 
 //BellmanFord.c
 
-int possuiCicloNegativo(Grefo* grafo)
+int possuiCicloNegativo(Grafo* grafo);
+int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual);
 
 #endif

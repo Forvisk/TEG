@@ -17,10 +17,10 @@ Grafo* leituraTecladoGrafo(){
 		char esc = 'a';
 		printf( "O grafo é direcionado [Y/n]:");
 		scanf( "%c", &esc);
-		if( esc == 'Y'){
+		if( ( esc == 'Y') || ( esc == 'y')){
 			direcionado = 1;
 			printf(" Criando grafo direcionado!");
-		}else if( esc == 'n'){
+		}else if( ( esc == 'n') || ( esc == 'N')){
 			direcionado = 0;
 			printf( " Criando grafo não direcionado");
 		}else
