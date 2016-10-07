@@ -26,6 +26,7 @@ int removeAresta( int origem, int destino, Grafo* grafo);
 
 //GrafoTools.c
 
+Grafo* leituraTecladoGrafo();
 Grafo* leituraGrafo();
 Grafo* leituraGrafoDirecioado();
 void putsGrafo();

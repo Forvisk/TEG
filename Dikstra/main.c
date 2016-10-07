@@ -9,9 +9,25 @@
 #include "Grafo.h"
 
 int main(){
-	Grafo* grafo = leituraGrafo();
-	putsGrafo( grafo);
-	dijkstra( grafo, escolheVertice( grafo));
+	char esc = 'Y';
+	while(esc == 'Y'){
+		printf( "Deseja criar um grafo [Y/n]: ");
+		scanf("%c", &esc);
+		if( esc == 'Y'){
+			Grafo* grafo = leituraTecladoGrafo();
+			if(grafo != NULL){
+				putsGrafo( grafo);
+				dijkstra( grafo, escolheVertice( grafo));
+			}else{
+				printf("Falha na criação do Grafo!\n");
+			}
+		}else if( esc == 'n'){
+			printf("Encerrando programa!\n");
+		}else{
+			printf( "Escolha invalida! %c\n", esc);
+			esc = 'Y';
+		}
+	}
 	return 0;
 }
 
