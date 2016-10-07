@@ -5,6 +5,76 @@
 
 #include "Grafo.h"
 
+Grafo* leituraTecladoGrafo(){
+	int n_vertices, n_arestas;
+	int v1, v2, custo;
+	int direcionado = -1;
+	int i;
+	Grafo* grafo;
+
+	printf( "Inicindo inserção de dados!\n");
+	while( direcionado == -1){
+		char esc = 'a';
+		printf( "O grafo é direcionado [Y/n]:");
+		scanf( "%c", &esc);
+		if( esc == 'Y'){
+			direcionado = 1;
+			printf(" Criando grafo direcionado!");
+		}else if( esc == 'n'){
+			direcionado = 0;
+			printf( " Criando grafo não direcionado");
+		}else
+			printf( " Escolha invalida! %c", esc);
+	}
+	printf( "\nNumero de vertices: ");
+	scanf( "%i", &n_vertices);
+	printf( "\nNumero de arestas: ");
+	scanf( "%i", &n_arestas);
+	grafo = criaGrafo( n_vertices);
+	putsGrafo(grafo);
+	printf("Modelo de entrada de vertice:\nV1 V2 Custo\n");
+	if(direcionado){
+		for( i = 0; i < n_arestas; i++){
+			int ok = 0;
+			while( !ok){
+				scanf( "%i%i%i", &v1, &v2, &custo);
+				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
+					addAresta( --v1, --v2, custo, grafo);
+					grafo->n_arestas++;
+					printf("Aresta inserida: %i %i %i\n", v1+1, v2+1, custo);
+					ok = 1;
+				}else{
+					printf("Aresta invalido!\n");
+					ok = 0;
+				}
+			}
+		}
+	}
+	else if(!direcionado){
+		for ( i = 0; i < n_arestas; ++i){
+			int ok = 0;
+			while( !ok){
+				scanf( "%i%i%i", &v1, &v2, &custo);
+				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
+					addAresta( --v1, --v2, custo, grafo);
+					addAresta( v2, v1, custo, grafo);
+					grafo->n_arestas++;
+					printf("Aresta inserida: %i %i %i\n", v1+1, v2+1, custo);
+					ok = 1;
+				}else{
+					printf("Aresta invalido!\n");
+					ok = 0;
+				}
+			}
+		}
+	}
+	else{
+		printf("Erro\n");
+		return NULL;
+	}
+	return grafo;
+}
+
 Grafo* leituraGrafoDirecionado(){
 	char arquivo[ 50];
 	char nameAresta;
@@ -74,11 +144,11 @@ void putsGrafo( Grafo* grafo){
 	printf( "\n\n");
 	for( i = 0; i < grafo->n_vertices; i++){
 		printf( "%2i  ", i+1);
-		for ( int j = 0; j < grafo->n_vertices; j++){
+		for ( j = 0; j < grafo->n_vertices; j++){
 			printf( " %3i ", grafo->vertices[i][j]);
 		}
 		printf("\n    ");
-		for( int j = 0; j < grafo->n_vertices; j++){
+		for( j = 0; j < grafo->n_vertices; j++){
 			printf( " %3i ", grafo->custo[i][j]);
 		}
 		printf( "\n\n");

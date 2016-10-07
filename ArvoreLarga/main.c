@@ -4,12 +4,13 @@
 
 //gcc -Wall ArvoreLarga.c ArvoreLarga.h CGrafos.c CGrafos.h main.c -o arvoreLargura
 
+#include <stdlib.h>
 #include <stdio.h>
 #include "CGrafos.h"
 #include "ArvoreLarga.h"
 
 int main(void){
-	Grafo* grafo = leituraArquivo();
+	Grafo* grafo = leituraTeclado();
 	putsGrafo(grafo);
 	/*Arvore* tree = testeArvore();
 	putsArvore(tree);

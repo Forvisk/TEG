@@ -2,6 +2,8 @@
 // Marlon Henry Schweigert
 // Adriano Zanella Jr
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "CGrafos.h"
 
 #ifndef __ArvoreLarga__
