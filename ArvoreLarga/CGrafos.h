@@ -2,6 +2,9 @@
 // Marlon Henry Schweigert
 // Adriano Zanella Jr
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #ifndef __CGrafos__
 #define __CGrafos__
 
@@ -20,6 +23,7 @@ typedef struct {
 
 Grafo* criarGrafo(int n_vertices);
 Grafo* leituraArquivo();
+Grafo* leituraTeclado();
 
 void addAresta(Grafo* grafo, int a, int b);
 void addArestaDirecionado(Grafo* grafo, int a, int b);

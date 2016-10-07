@@ -35,13 +35,14 @@ Grafo* leituraTecladoGrafo(){
 	printf("Modelo de entrada de vertice:\nV1 V2 Custo\n");
 	if(direcionado){
 		for( i = 0; i < n_arestas; i++){
-			int ok = 1;
-			while( ok){
+			int ok = 0;
+			while( !ok){
 				scanf( "%i%i%i", &v1, &v2, &custo);
 				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
 					addAresta( --v1, --v2, custo, grafo);
 					grafo->n_arestas++;
 					printf("Aresta inserida: %i %i %i\n", v1+1, v2+1, custo);
+					ok = 1;
 				}else{
 					printf("Aresta invalido!\n");
 					ok = 0;
@@ -51,14 +52,15 @@ Grafo* leituraTecladoGrafo(){
 	}
 	else if(!direcionado){
 		for ( i = 0; i < n_arestas; ++i){
-			int ok = 1;
-			while( ok){
+			int ok = 0;
+			while( !ok){
 				scanf( "%i%i%i", &v1, &v2, &custo);
 				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
 					addAresta( --v1, --v2, custo, grafo);
 					addAresta( v2, v1, custo, grafo);
 					grafo->n_arestas++;
 					printf("Aresta inserida: %i %i %i\n", v1+1, v2+1, custo);
+					ok = 1;
 				}else{
 					printf("Aresta invalido!\n");
 					ok = 0;

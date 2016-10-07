@@ -200,14 +200,14 @@ void putsArvore(Arvore* arvore){
 
 void putsFilhos(Vertice* verticePai){
 	if(verticePai->filho != NULL){
-		printf("\nFilhos de %i:  ", verticePai->nome);
+		printf("\nFilhos de %i:  ", verticePai->nome + 1);
 
 		ListaV* listaAux = verticePai->filho;
 		int leave = 0;
 		do{
 			leave = 0;
 			Vertice* verticeFilho = listaAux->vertice;
-			printf("%i", verticeFilho->nome);
+			printf("%i", verticeFilho->nome + 1);
 			if(listaAux->proximo != NULL){
 				printf("  ");
 			}else{
@@ -228,14 +228,14 @@ void putsFilhos(Vertice* verticePai){
 			listaAux = listaAux->proximo;
 		}while(!leave);
 	}else{
-		printf("\nVertice %i sem filhos.", verticePai->nome);
+		printf("\nVertice %i sem filhos.", verticePai->nome + 1);
 	}
 }
 
 
 void putsDescendentes(int nome, Arvore* arvore){
 	Vertice* verticePai = buscaVerticeArvore(nome, arvore);
-	printf("Descendentes de %i: ", verticePai->nome);
+	printf("Descendentes de %i: ", verticePai->nome + 1);
 	putsDescendentesRecursao(verticePai);
 	printf("\n");
 }
@@ -247,7 +247,7 @@ void putsDescendentesRecursao(Vertice* verticePai){
 		do{
 			leave = 0;
 			Vertice* verticeFilho = listaAux->vertice;
-			printf("%i ", verticeFilho->nome);
+			printf("%i ", verticeFilho->nome + 1);
 			if(listaAux->proximo == NULL){
 				leave = 1;
 			}
@@ -272,14 +272,14 @@ void putsAscendentes(int nome, Arvore *arvore){
 	if(verticeInicial->pai == NULL){
 		printf("Vertice raiz da arvore, sem ancestrais\n");
 	}else{
-		printf("Ancestrais de %i: ", verticeInicial->nome);
+		printf("Ancestrais de %i: ", verticeInicial->nome + 1);
 		putsAscendentesRecursao(verticeInicial);
 	}
 }
 
 void putsAscendentesRecursao(Vertice* verticeFilho){
 	Vertice* verticePai = verticeFilho->pai;
-	printf("%i ", verticePai->nome);
+	printf("%i ", verticePai->nome + 1);
 	if(verticePai->pai != NULL){
 		putsAscendentesRecursao(verticePai);
 	}else{
@@ -289,16 +289,16 @@ void putsAscendentesRecursao(Vertice* verticeFilho){
 
 int pedeVerticeInicial(){
 	int escolha = 0;
-	printf("Raiz da arvore: ");
+	printf("\tRaiz da arvore: ");
 	scanf("%i", &escolha);
-	return escolha;
+	return (escolha - 1);
 }
 
 int pedeVerticeDesejado(){
 	int escolha = 0;
-	printf("Vertice da arvore: ");
+	printf("\n\tEscolha o vertice:");
 	scanf("%i", &escolha);
-	return escolha;
+	return (escolha - 1);
 }
 
 
