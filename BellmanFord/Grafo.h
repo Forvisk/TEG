@@ -44,4 +44,6 @@ void dijkstra( Grafo* grafo, int verticeInicial);
 
 //BellmanFord.c
 
+int possuiCicloNegativo(Grefo* grafo)
+
 #endif

@@ -4,3 +4,7 @@
 
 
 #include "Grafo.h"
+
+int possuiCicloNegativo(Grefo* grafo){
+	return 0;
+}
