@@ -15,16 +15,12 @@ int main(){
 		scanf("%c", &esc);
 		if( ( esc == 'Y') || ( esc == 'y')){
 			Grafo* grafo = leituraTecladoGrafo();
-			if(grafo != NULL){
-				putsGrafo( grafo);
-				if( !possuiCicloNegativo(grafo)){
-					bellmanFord(grafo);
-				}else{
-					printf("Possiu ciclos negativos, não é possivel usar Bellman-Ford\n");
-				}
-			}else{
+			putsGrafo(grafo);
+			//if(grafo != NULL){
+				bellmanFord(grafo, escolheVertice(grafo));
+			/**else{
 				printf("Falha na criação do Grafo!\n");
-			}
+			}*/
 		}else if( ( esc == 'n') || ( esc == 'N')){
 			printf("Encerrando programa!\n");
 		}else{
