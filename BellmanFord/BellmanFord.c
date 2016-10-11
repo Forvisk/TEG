@@ -4,148 +4,121 @@
 
 #include "Grafo.h"
 
-#define INFINITO 1
-#define NULO -1
 
 int possuiCicloNegativo(Grafo* grafo){
 	int n_vertices = grafo->n_vertices;
-	int i, j;
-	int cicloNegatico;
-	//int custoCiclo = 0;
-	//int ok = 1;
-	printf("1\n");
+
+	//int custo = 0;
+	int vert_visit[ n_vertices];
+	int i, j, k;
+	int cicloNegativo;
+	for( k = 0; k < n_vertices; k++)
+		vert_visit[ k] = 0;
+
+	vert_visit[ 0] = 1;
 	for( i = 0; i < n_vertices; i++){
-		printf("2\n");
 		for( j = 0; j < n_vertices; j++){
-			printf("3\n");
+			vert_visit[ i] = 1;
 			if( i != j){
 				if( grafo->vertices[ i][ j] > 0){
-					printf("achou aresta %i para %i\n", i+1, j+1);
-					printf("%i\n", grafo->custo[ i][ j]);
-					cicloNegatico = buscaCiclo( i, j, grafo, grafo->custo[ i][ j]);
-					if( cicloNegatico == NEG){
+					printf( "Achou aresta de %i para %i com custo %i\n", i+1, j+1, grafo->custo[ i][ j]);
+
+					vert_visit[ j] = 1;
+					cicloNegativo = buscaCiclo( i, j, grafo, grafo->custo[ i][ j], vert_visit);
+
+					if( cicloNegativo)
 						return NEG;
-					}
+				}
+			}else{
+				if( grafo->vertices[ i][ j] > 0){
+					printf( "Achou aresta de %i para %i com custo %i\n", i+1, j+1, grafo->custo[ i][ j]);
+					if( grafo->custo[ i][ j] < 0)
+						return NEG;
 				}
 			}
+
+			for( k = 0; k < n_vertices; k ++)
+				vert_visit[ k] = 0;
 		}
 	}
 	return POS;
 }
 
-int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual){
+int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual, int *vert_visit_init){
 	int n_vertices = grafo->n_vertices;
-	int i = verticeOrigem;
-	int j = verticeDestino;
+	int i = verticeOrigem, j = verticeDestino;
+	int k;
+	int cicloNegativo;
+	int vert_visit[ n_vertices];
+
 	if( grafo->vertices[ i][ j] > 0){
-		printf("achou aresta %i para %i\n", i+1, j+1);
-		printf("%i\n", custoAtual + grafo->custo[ i][ j]);
-		if( custoAtual + grafo->custo[ i][ j] < 0){
+		printf( "Achou aresta de %i para %i com custo %i\n", i+1, j+1, grafo->custo[ i][ j]);
+		printf("custo ciclo: %i\n", custoAtual + grafo->custo[ i][ j]);
+		if( custoAtual + grafo->custo[ i][ j] < 0)
 			return NEG;
-		}else{
-			printf("Ciclo positivo\n");
+		else
 			return POS;
-		}
 	}
+
+	for( k = 0; k < n_vertices; k++)
+		vert_visit[ k] = vert_visit_init[ k];
+
 	for( j = 0; j < n_vertices; j++){
-		if( i != j){
-			if(grafo->vertices[ i][ j] > 0){
-				printf("achou aresta %i para %i // %i\n", i+1, j+1, verticeOrigem+1);
-				printf("%i\n", custoAtual + grafo->custo[ i][ j]);
-				int cicloNegatico = buscaCiclo( verticeDestino, j, grafo, custoAtual + grafo->custo[ i][ j]);
-				if( cicloNegatico == NEG){
+		if( (i != j) && (!vert_visit[ j])){
+			if( grafo->vertices[ i][ j]){
+				printf( "Achou aresta de %i para %i com custo %i\n", i+1, j+1, grafo->custo[ i][ j]);
+				printf("custo ciclo: %i\n", custoAtual + grafo->custo[ i][ j]);
+				vert_visit[ j] = 1;
+				cicloNegativo = buscaCiclo( verticeDestino, j, grafo, custoAtual + grafo->custo[ i][ j], vert_visit);
+				if( cicloNegativo)
 					return NEG;
-				}
 			}
-		}
+		}else
+			if( grafo->vertices[ i][ j]){
+				printf( "Achou aresta de %i para %i mas ja passou\n", i+1, j+1);
+			}
 	}
-	printf("Fim de linha %i\n", i+1);
+
+	printf("Fim do caminho %i\n", i+1);
 	return POS;
+
 }
 
 void bellmanFord(Grafo* grafo, int verticeInicial){
-	//if( !possuiCicloNegativo(grafo)){
-		if( verticeInicial >= 0){
-			int n_vertices = grafo->n_vertices;
+	if( !possuiCicloNegativo( grafo)){
+		printf("Sem ciclo negativos\n");
+		int n_vertices = grafo->n_vertices;
 
-			int tabela[ n_vertices][ 3];
-			int short vert_Visit[ n_vertices];
-			int i = 0, j = 0;
-			int leave = 1;
-			int cicloNegativo = 0;
-			for( i = 0; i < n_vertices; i++){
-				tabela[ i][ 0] = NULO;
-				tabela[ i][ 1] = 0;
-				tabela[ i][ 2] = INFINITO;
-				vert_Visit[ i] = 0;
-			}
+		int i, j;
+		int tabela[ n_vertices][ 2];
+		int vert_visit[ n_vertices];
+		int leave = 1;
+		i = verticeInicial;
 
-			tabela[ verticeInicial][ 0] = verticeInicial;
-			tabela[ verticeInicial][ 1] = 0;
-			tabela[ verticeInicial][ 2] = 0;
-			vert_Visit[ verticeInicial] = 1;
- 			do{
-				leave = 1;
-				for( i = 0; i < n_vertices; i++){
-					if( vert_Visit[ i] == 1){
-						for( j = 0; j < n_vertices; j++){
-							if( grafo->vertices[ i][ j] > 0){
-								printf("Achou vertice %i -> %i\n", i+1, j+1);
-								if(tabela[ j][ 0] == NULO){
-									tabela[ j][ 0] = i;
-									tabela[ j][ 1] = tabela[ i][ 1] + grafo->custo[ i][ j];
-									vert_Visit[ j] = 1;
-									printf("Primeiro\n");
-									//tabela[ j][ 2] = 0;
-								}else if( tabela[ i][ 1] + grafo->custo[ i][ j] < tabela[ j][ 1]){
-									printf("substitui %i %i por %i %i\n", tabela[ j][ 0], tabela[ j][ 1], i, tabela[ i][ 1] + grafo->custo[ i][ j]);
-									tabela[ j][ 0] = i;
-									tabela[ j][ 1] = tabela[ i][ 1] + grafo->custo[ i][ j];
-									vert_Visit[ j] = 1;
-								}
-							}
-						}
-						leave = 0;
-						vert_Visit[ i] = 2;
-					}
-				}
-			}while( !leave);
-			for( i = 0; (i < n_vertices) && !cicloNegativo; i++){
-				for( j = 0; (j < n_vertices) && !cicloNegativo; j++){
-					if( grafo->vertices[ i][ j] > 0){
-						if( tabela[ i][ 1] + grafo->custo[ i][ j] < tabela[ j][ 1]){
-							printf("%2i %2i\n", i+1, j+1);
-							printf("%2i %2i\n", tabela[ i][ 1] + grafo->custo[ i][ j], tabela[ j][ 1]);
-							cicloNegativo = 1;
-						}
-					}
-				}
-			}
-			if( !cicloNegativo){
-				printf( "\nVertice:  ");
-				for( i = 0; i < n_vertices; i++){
-					printf( " %3i ", i + 1);
-				}
-				printf( "\nCusto:    ");
-				for( i = 0; i < n_vertices; i++){
-					if( tabela[ i][ 1] != NULO)
-						printf(" %3i ", tabela[ i][ 1]);
-					else
-						printf(" NUL ");
-				}
-				printf( "\nAnterior: ");
-				for( i = 0; i < n_vertices; i++){
-					if( tabela[ i][ 0] != NULO)
-						printf( " %3i ", tabela[ i][ 0] + 1);
-					else
-						printf(" NUL ");
-				}
-				printf( "\n");
-			}else{
-				printf("Possiu ciclos negativos, não é possivel usar Bellman-Ford\n");
+		for( i = 0; i < n_vertices; i++){
+			tabela[ i][ 0] = NULO;
+			tabela[ i][ 1] = INFINITO;
+		}
+		tabela[ verticeInicial][ 0] = verticeInicial;
+		tabela[ verticeInicial][ 1] = 0;
+
+		for( j = 0; j < n_vertices; j++){
+			if(( grafo->vertices[ i][ j] > 0) && ( j != verticeInicial)){
+				vert_visit[ j] = 1;
+				tabela[ j][ 0] = verticeInicial;
+				tabela[ j][ 1] = grafo->custo[ i][ j];
 			}
 		}
-	/*}else{
-		printf("Possiu ciclos negativos, não é possivel usar Bellman-Ford\n");
-	}*/
+		do{
+			for( i = 0; i < n_vertices; i ++){
+				if( ( tabela[ i][ 0] != NULO) && ( i != verticeInicial)){
+					for( j = 0; j < n_vertices; j++){
+						if( ( i != j) && ( grafo->n_vertices[ i][ j]))
+					}
+				}
+			}
+		}while( !leave);
+	}else{
+		printf("Possui ciclos negativos, não é possivel usar o Bellman-Ford\n");
+	}
 }

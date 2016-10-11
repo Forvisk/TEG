@@ -12,6 +12,9 @@
 #define NEG 1
 #define POS 0
 
+#define INFINITO 1
+#define NULO -1
+
 typedef struct{
 	int n_vertices;
 	int n_arestas;
@@ -48,7 +51,7 @@ void dijkstra( Grafo* grafo, int verticeInicial);
 //BellmanFord.c
 
 int possuiCicloNegativo(Grafo* grafo);
-int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual);
+int buscaCiclo( int verticeDestino, int verticeOrigem, Grafo* grafo, int custoAtual, int *vert_visit_init);
 void bellmanFord(Grafo* grafo, int verticeInicial);
 
 #endif
