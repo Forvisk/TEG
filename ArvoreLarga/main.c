@@ -22,11 +22,13 @@ int main(void){
 
 	printf("\n\n");
 	putsArvore(tree);
-	
-	printf("Descentes de um vertice:");
-	putsDescendentes(pedeVerticeDesejado(), tree);
-
-	printf("Ancestrais de um vertice:");
-	putsAscendentes(pedeVerticeDesejado(), tree);
+	int vertice = -1;
+	do{
+		vertice = pedeVerticeDesejado();
+		if(( vertice >= 0) && ( vertice < grafo->vertices)){
+			putsDescendentes(vertice, tree);
+			putsAscendentes(vertice, tree);
+		}
+	}while(vertice >= 0);
 	return 0;
 }
