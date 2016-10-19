@@ -63,12 +63,12 @@ Grafo* addVertice(Grafo* grafo, int quant){
 				if(grafo->matriz_adj[i][j] > 0){
 					if(i == j)
 						for(c = 0; c < grafo->matriz_adj[i][j] / 2; c++){
-							printf("aresta %i %i\n", i, j);
+							//printf("aresta %i %i\n", i, j);
 							addAresta(new, i, j);
 						}
 					else
 						for(c = 0; c < grafo->matriz_adj[i][j]; c++){
-							printf("aresta %i %i\n", i, j);
+							//printf("aresta %i %i\n", i, j);
 							addAresta(new, i, j);
 						}
 				}
@@ -90,12 +90,12 @@ Grafo* addVerticeDirecional(Grafo* grafo, int quant){
 				if(grafo->matriz_adj[i][j] > 0){
 					if(i == j){
 						for(c = 0; c < grafo->matriz_adj[i][j] / 2; c++){
-							printf("aresta %i %i\n", i, j);
+							//printf("aresta %i %i\n", i, j);
 							addArestaDirecionado(new, i, j);
 						}
 					}else{
 						for(c = 0; c < grafo->matriz_adj[i][j]; c++){
-							printf("aresta %i %i\n", i, j);
+							//printf("aresta %i %i\n", i, j);
 							addArestaDirecionado(new, i, j);
 						}
 					}
@@ -178,13 +178,14 @@ Grafo* RemoveVerticeDirecional(Grafo* grafo, int a){
 *	essa função lê o grafo e imprime na tela na forma de grafo de adjacencia
 */
 void putsGrafo (Grafo* grafo){
+	int i, j;
 	printf("\nGrafo %p:\n\tVertices: %d\n\tArestas: %d\n", (void*)grafo,grafo->vertices,grafo->arestas);
 	if(grafo->isDir)
 		printf("\tGrafo direcionado\n");
 	else
 		printf("\tGrafo não direcionado\n");
-	for(int i = 0; i < grafo->vertices; i++){
-		for(int j = 0; j < grafo->vertices; j++)
+	for( i = 0; i < grafo->vertices; i++){
+		for( j = 0; j < grafo->vertices; j++)
 			printf ("%d ", grafo->matriz_adj[i][j]);
 		printf("\n");
 	}
@@ -230,7 +231,7 @@ Grafo* leituraArquivo(){
 	}
 	for(i = 0; (i < nArest) && (feof(fp) == 0); i++) {
 		fscanf( fp, "%c: %i, %i;\n", &nonAresta, &a, &b);
-		printf("%c: %i, %i\n", nonAresta, a, b);
+		//printf("%c: %i, %i\n", nonAresta, a, b);
 		if(grafo->isDir == 0)
 			addAresta(grafo, --a, --b);
 		else
@@ -277,7 +278,7 @@ Grafo* leituraTeclado(){
 				scanf( "%i%i", &v1, &v2);
 				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
 					addArestaDirecionado( grafo, --v1, --v2);
-					printf("Aresta inserida: %i %i\n", v1+1, v2+1);
+					//printf("Aresta inserida: %i %i\n", v1+1, v2+1);
 					ok = 1;
 				}else{
 					printf("Aresta invalido!\n");
@@ -294,7 +295,7 @@ Grafo* leituraTeclado(){
 				scanf( "%i%i", &v1, &v2);
 				if( ( v1 <= n_vertices) && ( v2 <= n_vertices) && ( v1 > 0) && ( v2 > 0)){
 					addAresta( grafo, --v1, --v2);
-					printf("Aresta inserida: %i %i\n", v1+1, v2+1);
+					//printf("Aresta inserida: %i %i\n", v1+1, v2+1);
 					ok = 1;
 				}else{
 					printf("Aresta invalido!\n");
