@@ -156,10 +156,10 @@ int main(void){
 	printGrafo(grafo, v);
 
 	// Leitura de Aresta Peso Aresta
-	printf("\n\t Origem Destino Peso\n");
+	printf("\n\tOrigem Destino Peso\n");
 	for(i = 0; i < a; i++){
 		printf("%d\t",i);
-		scanf("%d %d %d", &v1, &p, &v2);
+		scanf("%d %d %d", &v1, &v2, &p);
 		grafo[v1][v2] = p;
 	}
 
@@ -169,8 +169,10 @@ int main(void){
 	printGrafo(grafo, v);
 
 	// Leitura ponto inicial e final
-	printf("\nVertice de Inicio  Vertice Final\n");
-	scanf("%d %d", &v1, &v2);
+	printf("\nVertice de Inicio: ");
+	scanf("%d", &v1);
+	printf("Vertice Final: ");
+	scanf("%d", &v2);
 
 	// Calculando menor caminho e imprimindo tabela
 	printf("\tDijkstra:\n\n");
@@ -178,6 +180,7 @@ int main(void){
 
 	printf ("Fim Dijkstra:\n");
 	for(i = 0; i < v; i++){
+		printf("%i: \n", i);
 		for(j = 0; j < 3; j++){
 			printf("%d ", respDijkstra[i][j]);
 		}
